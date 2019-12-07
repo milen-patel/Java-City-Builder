@@ -8,6 +8,9 @@ import boardPieces.GrassPiece;
 
 public class Model {
 	
+	public static final int BOARD_X = 25;
+	public static final int BOARD_Y = 25;
+	
 	private BoardPieceInterface[][] board;
 	private double balance;
 	private int day;
@@ -15,7 +18,7 @@ public class Model {
 	
 	public Model() {
 		/* Set default value for instance variables */
-		board = new BoardPieceInterface[25][25];
+		board = new BoardPieceInterface[BOARD_Y][BOARD_X];
 		balance = 0;
 		day = 0;
 		observers = new ArrayList<Interfaces.ModelObserver>();
@@ -40,6 +43,26 @@ public class Model {
 	public void addToBalance(double amount) {
 		balance += amount;
 		notifyObservers(Interfaces.ModelObserver.EventTypes.BALANCE_CHANGED);
+	}
+	
+	public double getDailyIncome() {
+		double runningTotal = 0.0;
+		for (int y=0; y<board.length; y++) {
+			for(int x=0; x<board[0].length; x++) {
+				runningTotal += board[y][x].getDailyIncome();
+			}
+		}
+		return runningTotal;
+	}
+	
+	public int getPopulation() {
+		int runningTotal = 0;
+		for (int y=0; y<board.length; y++) {
+			for(int x=0; x<board[0].length; x++) {
+				runningTotal += board[y][x].getNumResidents();
+			}
+		}
+		return runningTotal;
 	}
 	
 	/* Observable Methods */

@@ -20,4 +20,16 @@ public class GrassPiece implements BoardPieceInterface{
 		return this.yPos;
 	}
 	
+	@Override
+	public double getDailyIncome() {
+		/* Empty pieces shouldn't generate revenue */
+		return 0.0;
+	}
+	
+	@Override
+	public int getNumResidents() {
+		/* No one can live on empty pieces */
+		return 0;
+	}
+	
 }

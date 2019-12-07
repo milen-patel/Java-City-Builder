@@ -46,8 +46,8 @@ public class BoardVisualizerWidget extends JPanel {
 		System.out.println("Board Visualizer Widget Repainting");
 		System.out.println("|--> Width: " + r.getWidth());
 		System.out.println("|--> Height: " + r.getHeight());
-		double eachCellXWidth =  (r.getWidth()/25);
-		double eachCellYWidth =  (r.getHeight()/25);
+		double eachCellXWidth =  (r.getWidth()/Model.BOARD_X);
+		double eachCellYWidth =  (r.getHeight()/Model.BOARD_Y);
 		g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.BLACK);
 		g2d.setStroke(new BasicStroke(4));
