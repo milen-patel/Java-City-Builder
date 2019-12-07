@@ -19,6 +19,8 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 	private JLabel moneyLabel;
 	private JLabel dailyIncomeLabel;
 	private JLabel populationLabel;
+	private JLabel dayLabel; 
+	
 	private JButton nextDayButton;
 	
 	private Model model;
@@ -67,6 +69,12 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 		c.gridy = 2;
 		this.add(populationLabel, c);
 		
+		/* Add Day Label */
+		dayLabel = new JLabel("<html><b>Day: </b>" + model.getDay() + "</html>");
+		c.gridx = 1;
+		c.gridy = 3;
+		this.add(dayLabel, c);
+		
 		/* Add Next Day Button */
 		nextDayButton = new JButton("Next Day");
 		nextDayButton.setActionCommand("NextDayButton");
@@ -98,6 +106,13 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 		System.out.println("View Has Been Notified That Model's Daily Income Has Changed");
 		dailyIncomeLabel.setText("<html><b>Daily Income: </b>" + model.getDailyIncome() + "</html>");
 	}
+	
+	@Override
+	public void DayChanged() {
+		System.out.println("View Has Been Notified That Model's Day Has Changed");
+		dayLabel.setText("<html><b>Day: </b>" + model.getDay() + "</html>");
+
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -121,5 +136,7 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 			}
 		}
 	}
+
+
 
 }

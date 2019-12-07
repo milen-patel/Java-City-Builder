@@ -40,6 +40,10 @@ public class Model {
 		return balance;
 	}
 	
+	public int getDay() {
+		return day;
+	}
+	
 	public void addToBalance(double amount) {
 		balance += amount;
 		notifyObservers(Interfaces.ModelObserver.EventTypes.BALANCE_CHANGED);
