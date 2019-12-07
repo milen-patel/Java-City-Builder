@@ -3,29 +3,34 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 
+import Interfaces.BoardPieceInterface;
+import boardPieces.GrassPiece;
+
 public class Model {
-	/*
-	 * 2D-Array representing all of the pieces on the board grid
-	 * 0 = Empty Ground
-	 * 1 = Road
-	 * 2 = House
-	 */
-	private int[][] boardPieces;
+	
+	private BoardPieceInterface[][] board;
 	private double balance;
 	private int day;
 	private List<Interfaces.ModelObserver> observers;
 	
 	public Model() {
 		/* Set default value for instance variables */
-		boardPieces = new int[25][25];
+		board = new BoardPieceInterface[25][25];
 		balance = 0;
 		day = 0;
 		observers = new ArrayList<Interfaces.ModelObserver>();
+		
+		/* Set all the pieces to grass pieces */
+		for (int y=0; y<board.length; y++) {
+			for (int x=0; x<board[0].length; x++) {
+				board[y][x] = new GrassPiece(x,y);
+			}
+		}
 	}
 	
 	/* Returns the board, but cloned */
-	public int[][] getBoard() {
-		return boardPieces.clone();
+	public BoardPieceInterface[][] getBoard() {
+		return this.board;
 	}
 	
 	public double getBalance() {

@@ -3,6 +3,7 @@ package main;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -13,6 +14,9 @@ public class View extends JPanel implements Interfaces.ModelObserver{
 	private JLabel moneyLabel;
 	private Model model;
 	private GridBagConstraints c;
+	private BoardVisualizerWidget boardDrawer;
+	
+
 
 	public View(Model model) {
 		/* Encapsulate the model */
@@ -26,12 +30,18 @@ public class View extends JPanel implements Interfaces.ModelObserver{
 		
 		/* Add Money Label */
 		moneyLabel = new JLabel("Balance: " + model.getBalance());
-		c.gridx = 0;
+		c.gridx = 1;
 		c.gridy = 0;
 		this.add(moneyLabel, c);
 		
 		/* Add the View as a ModelObserver */
 		model.addObserver(this);
+		
+		/* Add board visualizer widget */
+		boardDrawer = new BoardVisualizerWidget(model.getBoard());
+		c.gridx = 0;
+		c.gridy = 0;
+		this.add(boardDrawer, c);
 	}
 
 	@Override

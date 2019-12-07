@@ -19,7 +19,7 @@ public class Runner {
 		main_frame.setContentPane(view);
 		
 		/* Lock in dimensions */
-		main_frame.setPreferredSize(new Dimension(1000, 900));
+		main_frame.setPreferredSize(new Dimension(1000, 960));
 		main_frame.setResizable(false);
 
 		/* Make the frame visible */
