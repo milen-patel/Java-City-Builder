@@ -17,7 +17,7 @@ public class RoadPiece extends AbstractBoardPiece implements BoardPieceInterface
 		
 		if (icon == null) {
 			try {
-				icon = ImageIO.read(getClass().getResource("/boardPieces/StraightRoadImage.png"));
+				icon = ImageIO.read(getClass().getResource("/boardPieces/RoadImage.jpg"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
