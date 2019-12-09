@@ -32,6 +32,7 @@ public class EventLog {
 		notifyObservers(entry);
 	}
 	
+	
 	public List<String> getLog() {
 		return this.events;
 	}
@@ -48,4 +49,5 @@ public class EventLog {
 			o.newLogEntry(s);
 		}
 	}
+	
 }

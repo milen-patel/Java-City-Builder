@@ -24,6 +24,7 @@ import boardPieces.RoadPiece;
 
 public class BoardVisualizerWidget extends JPanel implements MouseListener {
 	// TODO: No need to encapsulate board if we encapsulate the model
+	public static final int BOARD_THICKNESS = 1;
 	private BoardPieceInterface[][] board;
 	private Model model;
 	Graphics2D g2d;
@@ -51,7 +52,7 @@ public class BoardVisualizerWidget extends JPanel implements MouseListener {
 		double eachCellYWidth = (r.getHeight() / Model.BOARD_Y);
 		g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.BLACK);
-		g2d.setStroke(new BasicStroke(4));
+		g2d.setStroke(new BasicStroke(BOARD_THICKNESS));
 
 		for (int y = 0; y < board.length; y++) {
 			for (int x = 0; x < board[0].length; x++) {

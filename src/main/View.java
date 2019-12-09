@@ -18,6 +18,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import Interfaces.*;
+import boardPieces.ApartmentPiece;
+import boardPieces.HousePiece;
+import boardPieces.RoadPiece;
 
 public class View extends JPanel implements Interfaces.ModelObserver, ActionListener, LogObserver{
 	/* Define instance variables */
@@ -96,6 +99,7 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 		/* Add help button */
 		helpButton = new JButton("Help");
 		helpButton.setActionCommand("HelpButton");
+		helpButton.addActionListener(this);
 		c.gridx = 2;
 		c.gridy = 5;
 		this.add(helpButton, c);
@@ -140,9 +144,19 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 	}
 
 	@Override
+	//TODO: Make the help button more useful
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().contentEquals("NextDayButton")) {
 			notifyObservers(ViewObserver.ViewEvent.NEXTDAYBUTTONCLICKED);
+		} else if (e.getActionCommand().contentEquals("HelpButton")) {
+			EventLog.getEventLog().addEntry("--------------------------------");
+			EventLog.getEventLog().addEntry("Welcome to City Builder");
+			EventLog.getEventLog().addEntry("Current Costs: ");
+			EventLog.getEventLog().addEntry("|--> House: $" + View.round(HousePiece.costToConstruct, 2));
+			EventLog.getEventLog().addEntry("|--> Apartment: $" + View.round(ApartmentPiece.costToConstruct, 2));
+			EventLog.getEventLog().addEntry("|--> Road: $" + View.round(RoadPiece.costToConstruct, 2));
+			EventLog.getEventLog().addEntry("|--> Demolish: $" + View.round(model.COST_TO_DEMOLISH, 2));
+			EventLog.getEventLog().addEntry("--------------------------------");
 		}
 	}
 	
