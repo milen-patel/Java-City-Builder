@@ -55,29 +55,31 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 		c.gridheight = 7;
 		this.add(boardDrawer, c);
 		
-		
+	    c.gridx = 1;
+	    this.add(new JLabel("   "), c);
+
 		/* Add Money Label */
 		moneyLabel = new JLabel("<html><b>Balance: </b>" + model.getBalance() + "</html>");
-		c.gridx = 1;
+		c.gridx = 2;
 		c.gridy = 0;
 		c.gridheight = 1;
 		this.add(moneyLabel, c);
 		
 		/* Add daily income label */
 		dailyIncomeLabel = new JLabel("<html><b>Daily Income: </b>" + model.getDailyIncome() + "</html>");
-		c.gridx = 1;
+		c.gridx = 2;
 		c.gridy = 1;
 		this.add(dailyIncomeLabel, c);
 		
 		/* Add population label */
 		populationLabel = new JLabel("<html><b>Population: </b>" + model.getPopulation() + "</html>");
-		c.gridx = 1;
+		c.gridx = 2;
 		c.gridy = 2;
 		this.add(populationLabel, c);
 		
 		/* Add Day Label */
 		dayLabel = new JLabel("<html><b>Day: </b>" + model.getDay() + "</html>");
-		c.gridx = 1;
+		c.gridx = 2;
 		c.gridy = 3;
 		this.add(dayLabel, c);
 		
@@ -85,21 +87,21 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 		nextDayButton = new JButton("Next Day");
 		nextDayButton.setActionCommand("NextDayButton");
 		nextDayButton.addActionListener(this);
-		c.gridx = 1;
+		c.gridx = 2;
 		c.gridy = 4;
 		this.add(nextDayButton, c);
 		
 		/* Add help button */
 		helpButton = new JButton("Help");
 		helpButton.setActionCommand("HelpButton");
-		c.gridx = 1;
+		c.gridx = 2;
 		c.gridy = 5;
 		this.add(helpButton, c);
 		
 		/* Set up log visualizer */
 		logLabel = new JTextArea(40,22);
 		logLabel.setEditable(false);
-		c.gridx = 1;
+		c.gridx = 2;
 		c.gridy = 6;
 		this.add(new JScrollPane(logLabel), c);
 		

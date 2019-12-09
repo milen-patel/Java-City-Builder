@@ -14,7 +14,7 @@ public class Runner {
 		
 		/* Create a frame and add the view to it */
 		JFrame main_frame = new JFrame();
-		main_frame.setTitle("Conway's Game of Life");
+		main_frame.setTitle("City Builder by Milen Patel");
 		main_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main_frame.setContentPane(view);
 		
