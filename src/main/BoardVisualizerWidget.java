@@ -102,7 +102,10 @@ public class BoardVisualizerWidget extends JPanel implements MouseListener {
 			this.model.construct(new RoadPiece((int) (temp.getWidth()), ((int) (temp.getHeight()))));
 		} else if (input.contains("Apartment")) {
 			this.model.construct(new ApartmentPiece((int) (temp.getWidth()), (int) (temp.getHeight())));
+		} else if (input.contains("Demolish")) {
+			this.model.demolish((int) (temp.getWidth()), (int) (temp.getHeight()));
 		}
+		//TODO make these variables into integers instead of casting each time we want to use them
 
 	}
 

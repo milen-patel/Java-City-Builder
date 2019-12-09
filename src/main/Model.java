@@ -13,6 +13,7 @@ public class Model {
 	
 	public static final int BOARD_X = 25;
 	public static final int BOARD_Y = 25;
+	public static int COST_TO_DEMOLISH = 50;
 	
 	private BoardPieceInterface[][] board;
 	private double balance;
@@ -75,10 +76,15 @@ public class Model {
 	
 	
 	public String[] getAvailableChoices(int x, int y) {
-		/* If something has already been constructed here, don't allow something else */
-		if (!(board[y][x] instanceof GrassPiece)) { return null; }
 		/* Create an empty list */
 		List<String> potentialOptions = new ArrayList<String>();
+		/* If something has already been constructed here, only allow for demolish */
+		if (!(board[y][x] instanceof GrassPiece) && this.getBalance() >= COST_TO_DEMOLISH) { 
+			potentialOptions.add("Demolish: $" + COST_TO_DEMOLISH);
+			return potentialOptions.toArray(new String[potentialOptions.size()]);
+			
+		}
+		
 		/* Add whatever we have enough money for */
 		//TODO make cost method be static
 		if (this.getBalance() >= ((new HousePiece(-1,-1)).getCostToBuild())) { potentialOptions.add("House: $" + (new HousePiece(1,1).getCostToBuild())); }
@@ -105,6 +111,21 @@ public class Model {
 		notifyObservers(ModelObserver.EventTypes.DAILYINCOME_CHANGED);
 		notifyObservers(ModelObserver.EventTypes.POPULATION_CHANGED);
 		notifyObservers(ModelObserver.EventTypes.BOARD_CHANGED);
+	}
+	
+	public void demolish(int x, int y) {
+		/* Change the board spot */
+		board[y][x] = new GrassPiece(x,y);
+		/* Charge the user */
+		this.addToBalance(-COST_TO_DEMOLISH);
+		/* Make it more expensive to demolish the next spot */
+		COST_TO_DEMOLISH *= 2;
+		/* Write to log */
+		EventLog.getEventLog().addEntry("Building demolished at (" + x + ", " + y + ")");
+		/* Notify Observers */
+		notifyObservers(ModelObserver.EventTypes.BOARD_CHANGED);
+		notifyObservers(ModelObserver.EventTypes.POPULATION_CHANGED);
+		notifyObservers(ModelObserver.EventTypes.DAILYINCOME_CHANGED);
 	}
 	
 	public void nextDay() {
