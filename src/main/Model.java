@@ -80,9 +80,10 @@ public class Model {
 		/* Create an empty list */
 		List<String> potentialOptions = new ArrayList<String>();
 		/* Add whatever we have enough money for */
+		//TODO make cost method be static
 		if (this.getBalance() >= ((new HousePiece(-1,-1)).getCostToBuild())) { potentialOptions.add("House: $" + (new HousePiece(1,1).getCostToBuild())); }
 		if (this.getBalance() >= (new RoadPiece(-1,-1).getCostToBuild())) { potentialOptions.add("Road: $" + (new RoadPiece(1,1).getCostToBuild()) ); }
-		
+		if (this.getBalance() >= (new ApartmentPiece(-1,-1).getCostToBuild())) { potentialOptions.add("Apartment: $" + (new ApartmentPiece(-1,-1).getCostToBuild())); }
 		/* Validate list size before returning */
 		if (potentialOptions.size() != 0) {
 			return potentialOptions.toArray(new String[potentialOptions.size()]);

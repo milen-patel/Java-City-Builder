@@ -7,16 +7,13 @@ import javax.imageio.ImageIO;
 
 import Interfaces.BoardPieceInterface;
 
-public class HousePiece implements BoardPieceInterface{
-	private int xPos;
-	private int yPos;
+public class HousePiece extends AbstractBoardPiece implements BoardPieceInterface{
 	private double income;
 	private int residents;
 	private BufferedImage icon;
 	
 	public HousePiece(int xPos, int yPos) {
-		this.xPos = xPos;
-		this.yPos = yPos;
+		super(xPos, yPos, "House Piece");
 		this.income = Math.random()*100;
 		this.residents = (int) (1+ (4*Math.random()));
 		
@@ -31,16 +28,7 @@ public class HousePiece implements BoardPieceInterface{
 		}
 		
 	}
-	@Override
-	public int getXPosition() {
-		return this.xPos;
-	}
 
-	@Override
-	public int getYPosition() {
-		return this.yPos;
-	}
-	
 	@Override
 	public double getDailyIncome() {
 		return income;
@@ -53,13 +41,9 @@ public class HousePiece implements BoardPieceInterface{
 	}
 	@Override
 	public double getCostToBuild() {
-		// TODO Auto-generated method stub
 		return 500.0;
 	}
-	@Override
-	public String getPieceName() {
-		return "House Piece";
-	}
+
 	@Override
 	public BufferedImage getPieceImage() {
 		return icon;

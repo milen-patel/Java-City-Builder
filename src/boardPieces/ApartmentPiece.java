@@ -7,43 +7,48 @@ import javax.imageio.ImageIO;
 
 import Interfaces.BoardPieceInterface;
 
-public class GrassPiece extends AbstractBoardPiece implements BoardPieceInterface{
-	private static BufferedImage icon;
+public class ApartmentPiece extends AbstractBoardPiece implements BoardPieceInterface{
+	private double income;
+	private int residents;
+	private BufferedImage icon; 
 	
-	public GrassPiece(int xPos, int yPos) {
-		super(xPos, yPos, "Grass Piece");
+	
+	public ApartmentPiece(int xPos, int yPos) {
+		super(xPos, yPos, "Apartment Piece");
+		this.income = Math.random()*1000;
+		this.residents = (int) (1+ (400*Math.random()));
 		
 		if (icon == null) {
 			try {
-				icon = ImageIO.read(getClass().getResource("/boardPieces/GrassImage.jpg"));
+				icon = ImageIO.read(getClass().getResource("/boardPieces/ApartmentPiece.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+		
 	}
+	
 
 	@Override
 	public double getDailyIncome() {
-		/* Empty pieces shouldn't generate revenue */
-		return 0.0;
+		return this.income;
 	}
-	
+
 	@Override
 	public int getNumResidents() {
-		/* No one can live on empty pieces */
-		return 0;
+		return this.residents;
 	}
+
 	@Override
 	public double getCostToBuild() {
-		return 0;
+		return 10000;
 	}
 
 	@Override
 	public BufferedImage getPieceImage() {
 		return icon;
 	}
-	
-	
+
 }

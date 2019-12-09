@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Interfaces.BoardPieceInterface;
+import boardPieces.ApartmentPiece;
 import boardPieces.GrassPiece;
 import boardPieces.HousePiece;
 import boardPieces.RoadPiece;
@@ -99,6 +100,8 @@ public class BoardVisualizerWidget extends JPanel implements MouseListener {
 			this.model.construct(new HousePiece((int) (temp.getWidth()), ((int) (temp.getHeight()))));
 		} else if (input.contains("Road")) {
 			this.model.construct(new RoadPiece((int) (temp.getWidth()), ((int) (temp.getHeight()))));
+		} else if (input.contains("Apartment")) {
+			this.model.construct(new ApartmentPiece((int) (temp.getWidth()), (int) (temp.getHeight())));
 		}
 
 	}
