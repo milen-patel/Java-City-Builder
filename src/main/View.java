@@ -6,6 +6,8 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,7 +117,7 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 	@Override
 	public void BalanceChanged() {
 		System.out.println("View Has Been Notified That Model's Balance Has Changed");
-		moneyLabel.setText("<html><b>Balance: </b>" + model.getBalance() + "</html>");
+		moneyLabel.setText("<html><b>Balance: </b>" + round(model.getBalance(),2) + "</html>");
 	}
 
 	@Override
@@ -127,7 +129,7 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 	@Override
 	public void DailyIncomeChanged() {
 		System.out.println("View Has Been Notified That Model's Daily Income Has Changed");
-		dailyIncomeLabel.setText("<html><b>Daily Income: </b>" + model.getDailyIncome() + "</html>");
+		dailyIncomeLabel.setText("<html><b>Daily Income: </b>" + round(model.getDailyIncome(),2) + "</html>");
 	}
 	
 	@Override
@@ -169,6 +171,14 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 		boardDrawer.repaint();
 	}
 
+	/* Internal helper method used for rounding doubles when displaying UI elements */
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    BigDecimal bd = BigDecimal.valueOf(value);
+	    bd = bd.setScale(places, RoundingMode.HALF_UP);
+	    return bd.doubleValue();
+	}
 
 
 }
