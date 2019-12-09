@@ -5,4 +5,6 @@ public interface BoardPieceInterface {
 	public int getYPosition();
 	public double getDailyIncome();
 	public int getNumResidents();
+	public double getCostToBuild();
+	public String getPieceName();
 }

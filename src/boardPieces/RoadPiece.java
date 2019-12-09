@@ -2,11 +2,12 @@ package boardPieces;
 
 import Interfaces.BoardPieceInterface;
 
-public class GrassPiece implements BoardPieceInterface{
+public class RoadPiece implements BoardPieceInterface {
+	public enum roadType { HORIZONTAL, VERTICAL, INTERSECTION, ENDPIECE, TLCORNER, TRCORNER, BRCORNER, BLCORNER}
 	private int xPos;
 	private int yPos;
 	
-	public GrassPiece(int xPos, int yPos) {
+	public RoadPiece(int xPos, int yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}
@@ -33,11 +34,12 @@ public class GrassPiece implements BoardPieceInterface{
 	}
 	@Override
 	public double getCostToBuild() {
-		return 0;
+		// TODO Auto-generated method stub
+		return 1000.0;
 	}
 	@Override
 	public String getPieceName() {
-		return "Grass Piece";
+		return "Road Piece";
 	}
 	
 }

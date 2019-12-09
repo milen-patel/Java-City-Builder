@@ -2,13 +2,17 @@ package boardPieces;
 
 import Interfaces.BoardPieceInterface;
 
-public class GrassPiece implements BoardPieceInterface{
+public class HousePiece implements BoardPieceInterface{
 	private int xPos;
 	private int yPos;
+	private double income;
+	private int residents;
 	
-	public GrassPiece(int xPos, int yPos) {
+	public HousePiece(int xPos, int yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
+		this.income = Math.random()*100;
+		this.residents = (int) (1+ (4*Math.random()));
 	}
 	@Override
 	public int getXPosition() {
@@ -22,22 +26,22 @@ public class GrassPiece implements BoardPieceInterface{
 	
 	@Override
 	public double getDailyIncome() {
-		/* Empty pieces shouldn't generate revenue */
-		return 0.0;
+		return income;
 	}
 	
 	@Override
 	public int getNumResidents() {
 		/* No one can live on empty pieces */
-		return 0;
+		return residents;
 	}
 	@Override
 	public double getCostToBuild() {
-		return 0;
+		// TODO Auto-generated method stub
+		return 500.0;
 	}
 	@Override
 	public String getPieceName() {
-		return "Grass Piece";
+		return "House Piece";
 	}
-	
+
 }

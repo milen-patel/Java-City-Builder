@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Interfaces.BoardPieceInterface;
+import Interfaces.ModelObserver;
 import boardPieces.GrassPiece;
+import boardPieces.HousePiece;
+import boardPieces.*;
 
 public class Model {
 	
@@ -19,7 +22,7 @@ public class Model {
 	public Model() {
 		/* Set default value for instance variables */
 		board = new BoardPieceInterface[BOARD_Y][BOARD_X];
-		balance = 0;
+		balance = 5000.0;
 		day = 0;
 		observers = new ArrayList<Interfaces.ModelObserver>();
 		
@@ -47,6 +50,7 @@ public class Model {
 	public void addToBalance(double amount) {
 		balance += amount;
 		notifyObservers(Interfaces.ModelObserver.EventTypes.BALANCE_CHANGED);
+		EventLog.getEventLog().addEntry("Balance has been changed by: $" + amount);
 	}
 	
 	public double getDailyIncome() {
@@ -69,6 +73,39 @@ public class Model {
 		return runningTotal;
 	}
 	
+	
+	public String[] getAvailableChoices(int x, int y) {
+		/* If something has already been constructed here, don't allow something else */
+		if (!(board[y][x] instanceof GrassPiece)) { return null; }
+		/* Create an empty list */
+		List<String> potentialOptions = new ArrayList<String>();
+		/* Add whatever we have enough money for */
+		if (this.getBalance() >= ((new HousePiece(-1,-1)).getCostToBuild())) { potentialOptions.add("House"); }
+		if (this.getBalance() >= (new RoadPiece(-1,-1).getCostToBuild())) { potentialOptions.add("Road"); }
+		
+		/* Validate list size before returning */
+		if (potentialOptions.size() != 0) {
+			return potentialOptions.toArray(new String[potentialOptions.size()]);
+		} else {
+			return null;
+		}
+	}
+	
+	
+	public void construct(BoardPieceInterface piece) {
+		/* Subtract balance */
+		balance -= piece.getCostToBuild();
+		/* Update Board */
+		board[piece.getYPosition()][piece.getXPosition()] = piece;
+		/* Add Log Notification */
+		EventLog.getEventLog().addEntry(piece.getPieceName() + " constructed at (" + piece.getXPosition() + ", " + piece.getYPosition() + ").");
+		/* Notify observers */
+		notifyObservers(ModelObserver.EventTypes.BALANCE_CHANGED);
+		notifyObservers(ModelObserver.EventTypes.DAILYINCOME_CHANGED);
+		notifyObservers(ModelObserver.EventTypes.POPULATION_CHANGED);
+		notifyObservers(ModelObserver.EventTypes.BOARD_CHANGED);
+	}
+	
 	/* Observable Methods */
 	public void addObserver(Interfaces.ModelObserver o) {
 		observers.add(o);
@@ -80,6 +117,14 @@ public class Model {
 		for (Interfaces.ModelObserver o : observers) {
 			if (eventType == Interfaces.ModelObserver.EventTypes.BALANCE_CHANGED) {
 				o.BalanceChanged();
+			} else if (eventType == Interfaces.ModelObserver.EventTypes.DAILYINCOME_CHANGED) {
+				o.DailyIncomeChanged();
+			} else if (eventType == Interfaces.ModelObserver.EventTypes.DAY_CHANGED) {
+				o.DayChanged();
+			} else if (eventType == Interfaces.ModelObserver.EventTypes.POPULATION_CHANGED) {
+				o.PopulationChanged();
+			} else if (eventType == Interfaces.ModelObserver.EventTypes.BOARD_CHANGED) {
+				o.BoardChanged();
 			}
 		}
 	}

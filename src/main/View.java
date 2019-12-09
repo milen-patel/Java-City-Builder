@@ -12,14 +12,18 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
 import Interfaces.*;
 
-public class View extends JPanel implements Interfaces.ModelObserver, ActionListener{
+public class View extends JPanel implements Interfaces.ModelObserver, ActionListener, LogObserver{
 	/* Define instance variables */
 	private JLabel moneyLabel;
 	private JLabel dailyIncomeLabel;
 	private JLabel populationLabel;
 	private JLabel dayLabel; 
+	private JTextArea logLabel;
 	
 	private JButton nextDayButton;
 	
@@ -44,10 +48,10 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 		
 		
 		/* Add board visualizer widget */
-		boardDrawer = new BoardVisualizerWidget(model.getBoard());
+		boardDrawer = new BoardVisualizerWidget(model.getBoard(), model);
 		c.gridx = 0;
 		c.gridy = 0;
-		c.gridheight = 5;
+		c.gridheight = 7;
 		this.add(boardDrawer, c);
 		
 		/* Add Money Label */
@@ -83,9 +87,17 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 		c.gridy = 4;
 		this.add(nextDayButton, c);
 		
+		/* Set up log visualizer */
+		logLabel = new JTextArea(20,20);
+		logLabel.setEditable(false);
+		c.gridx = 1;
+		c.gridy = 5;
+		this.add(new JScrollPane(logLabel), c);
+		
 		/* Add the View as a ModelObserver */
 		model.addObserver(this);
-		
+		/* Add the View as a log Observer */
+		EventLog.getEventLog().addObserver(this);
 	
 	}
 
@@ -118,6 +130,8 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().contentEquals("NextDayButton")) {
 			System.out.println("View Detects that NextDayButton has been clicked");
+			EventLog.getEventLog().addEntry("Next Day button clicked");
+
 			notifyObservers(ViewObserver.ViewEvent.NEXTDAYBUTTONCLICKED);
 		}
 	}
@@ -135,6 +149,16 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 				o.nextDayButtonClicked();
 			}
 		}
+	}
+
+	@Override
+	public void newLogEntry(String entry) {
+		logLabel.append(entry + "\n\n");
+	}
+
+	@Override
+	public void BoardChanged() {
+		boardDrawer.repaint();
 	}
 
 
