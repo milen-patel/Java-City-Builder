@@ -40,6 +40,7 @@ public class Model {
 				}
 			}
 		}
+		//TODO: Randomly place water over map
 	}
 
 	/* Returns the board, but cloned */
