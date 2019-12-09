@@ -11,6 +11,7 @@ public class HousePiece extends AbstractBoardPiece implements BoardPieceInterfac
 	private double income;
 	private int residents;
 	private BufferedImage icon;
+	public static double costToConstruct = 500.0; 
 	
 	public HousePiece(int xPos, int yPos) {
 		super(xPos, yPos, "House Piece");
@@ -27,6 +28,8 @@ public class HousePiece extends AbstractBoardPiece implements BoardPieceInterfac
 			}
 		}
 		
+		/* Make it more expensive to construct the next one */
+		costToConstruct *= (1 + Math.random());
 	}
 
 	@Override
@@ -41,7 +44,7 @@ public class HousePiece extends AbstractBoardPiece implements BoardPieceInterfac
 	}
 	@Override
 	public double getCostToBuild() {
-		return 500.0;
+		return costToConstruct;
 	}
 
 	@Override

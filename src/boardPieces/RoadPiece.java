@@ -10,6 +10,7 @@ import Interfaces.BoardPieceInterface;
 public class RoadPiece extends AbstractBoardPiece implements BoardPieceInterface {
 	public enum roadType { HORIZONTAL, VERTICAL, INTERSECTION, ENDPIECE, TLCORNER, TRCORNER, BRCORNER, BLCORNER}
 	private BufferedImage icon;
+	public static double costToConstruct = 1000.0;
 	
 	public RoadPiece(int xPos, int yPos) {
 		super(xPos, yPos, "Road Piece");
@@ -23,6 +24,9 @@ public class RoadPiece extends AbstractBoardPiece implements BoardPieceInterface
 				e.printStackTrace();
 			}
 		}
+		
+		/* Make it more expensive to construct the next one */
+		costToConstruct *= (1 + Math.random());
 	}
 	
 	@Override
@@ -39,8 +43,7 @@ public class RoadPiece extends AbstractBoardPiece implements BoardPieceInterface
 	
 	@Override
 	public double getCostToBuild() {
-		// TODO Auto-generated method stub
-		return 1000.0;
+		return costToConstruct;
 	}
 
 	@Override

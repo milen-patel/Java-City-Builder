@@ -172,6 +172,7 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 	}
 
 	/* Internal helper method used for rounding doubles when displaying UI elements */
+	//TODO: Make this return a string an add commas
 	public static double round(double value, int places) {
 	    if (places < 0) throw new IllegalArgumentException();
 

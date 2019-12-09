@@ -13,7 +13,7 @@ public class Model {
 	
 	public static final int BOARD_X = 25;
 	public static final int BOARD_Y = 25;
-	public static int COST_TO_DEMOLISH = 50;
+	public static double COST_TO_DEMOLISH = 1250.00;
 	
 	private BoardPieceInterface[][] board;
 	private double balance;
@@ -83,13 +83,15 @@ public class Model {
 			potentialOptions.add("Demolish: $" + COST_TO_DEMOLISH);
 			return potentialOptions.toArray(new String[potentialOptions.size()]);
 			
+		} else if (!(board[y][x] instanceof GrassPiece)) {
+			return null;
 		}
 		
 		/* Add whatever we have enough money for */
 		//TODO make cost method be static
-		if (this.getBalance() >= ((new HousePiece(-1,-1)).getCostToBuild())) { potentialOptions.add("House: $" + (new HousePiece(1,1).getCostToBuild())); }
-		if (this.getBalance() >= (new RoadPiece(-1,-1).getCostToBuild())) { potentialOptions.add("Road: $" + (new RoadPiece(1,1).getCostToBuild()) ); }
-		if (this.getBalance() >= (new ApartmentPiece(-1,-1).getCostToBuild())) { potentialOptions.add("Apartment: $" + (new ApartmentPiece(-1,-1).getCostToBuild())); }
+		if (this.getBalance() >= HousePiece.costToConstruct) { potentialOptions.add("House: $" + View.round(HousePiece.costToConstruct, 2)); }
+		if (this.getBalance() >= RoadPiece.costToConstruct) { potentialOptions.add("Road: $" + View.round(RoadPiece.costToConstruct,2)); }
+		if (this.getBalance() >= ApartmentPiece.costToConstruct) { potentialOptions.add("Apartment: $" + View.round(ApartmentPiece.costToConstruct,2)); }
 		/* Validate list size before returning */
 		if (potentialOptions.size() != 0) {
 			return potentialOptions.toArray(new String[potentialOptions.size()]);

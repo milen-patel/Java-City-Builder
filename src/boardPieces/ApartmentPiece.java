@@ -11,6 +11,7 @@ public class ApartmentPiece extends AbstractBoardPiece implements BoardPieceInte
 	private double income;
 	private int residents;
 	private BufferedImage icon; 
+	public static double costToConstruct = 10000;
 	
 	
 	public ApartmentPiece(int xPos, int yPos) {
@@ -27,6 +28,9 @@ public class ApartmentPiece extends AbstractBoardPiece implements BoardPieceInte
 				e.printStackTrace();
 			}
 		}
+		
+		/* Make it more expensive to construct the next one */
+		costToConstruct *= (1 + Math.random());
 		
 	}
 	
