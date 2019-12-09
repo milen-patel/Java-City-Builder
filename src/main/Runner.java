@@ -10,7 +10,6 @@ public class Runner {
 		System.out.println("Start of main method execution");
 		Model model = new Model();
 		View view = new View(model);
-		Controller controller = new Controller(view, model);
 		
 		/* Create a frame and add the view to it */
 		JFrame main_frame = new JFrame();

@@ -36,15 +36,12 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 	private Model model;
 	private GridBagConstraints c;
 	private BoardVisualizerWidget boardDrawer;
-	private List<ViewObserver> observers;
 
 
 	public View(Model model) {
 		/* Encapsulate the model */
 		this.model = model;
 		
-		/* Set up observer list */
-		observers = new ArrayList<ViewObserver>();
 		
 		/* Set the Layout */
 		this.setLayout(new GridBagLayout());
@@ -147,7 +144,7 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 	//TODO: Make the help button more useful
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().contentEquals("NextDayButton")) {
-			notifyObservers(ViewObserver.ViewEvent.NEXTDAYBUTTONCLICKED);
+			model.nextDay();
 		} else if (e.getActionCommand().contentEquals("HelpButton")) {
 			EventLog.getEventLog().addEntry("--------------------------------");
 			EventLog.getEventLog().addEntry("Welcome to City Builder");
@@ -155,25 +152,12 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 			EventLog.getEventLog().addEntry("|--> House: $" + View.round(HousePiece.costToConstruct, 2));
 			EventLog.getEventLog().addEntry("|--> Apartment: $" + View.round(ApartmentPiece.costToConstruct, 2));
 			EventLog.getEventLog().addEntry("|--> Road: $" + View.round(RoadPiece.costToConstruct, 2));
-			EventLog.getEventLog().addEntry("|--> Demolish: $" + View.round(model.COST_TO_DEMOLISH, 2));
+			EventLog.getEventLog().addEntry("|--> Demolish: $" + View.round(Model.COST_TO_DEMOLISH, 2));
 			EventLog.getEventLog().addEntry("--------------------------------");
 		}
 	}
 	
-	/* Implementation of Observer Methods */
-	public void addObserver(ViewObserver o) {
-		this.observers.add(o);
-	}
-	public void removeObserver(ViewObserver o) {
-		this.observers.remove(o);
-	}
-	public void notifyObservers(ViewObserver.ViewEvent e) {
-		for (ViewObserver o : observers) {
-			if (e == ViewObserver.ViewEvent.NEXTDAYBUTTONCLICKED) {
-				o.nextDayButtonClicked();
-			}
-		}
-	}
+	
 
 	@Override
 	public void newLogEntry(String entry) {
