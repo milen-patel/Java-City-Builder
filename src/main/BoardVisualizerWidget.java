@@ -75,13 +75,17 @@ public class BoardVisualizerWidget extends JPanel implements MouseListener {
 				g2d.drawRect((int)(x*eachCellXWidth), (int)(y*eachCellYWidth), (int)(eachCellXWidth), (int)(eachCellYWidth));
 				
 				/* If the position is a grass piece, then visualize grass */
-				if (board[y][x] instanceof GrassPiece) {
-			        g2d.drawImage(iconGrass, (int)(x*eachCellXWidth), (int)(y*eachCellYWidth), (int) (eachCellXWidth), (int) (eachCellYWidth), null);
-				} else if (board[y][x] instanceof RoadPiece) {
-			        g2d.drawImage(iconRoad, (int)(x*eachCellXWidth), (int)(y*eachCellYWidth), (int) (eachCellXWidth), (int) (eachCellYWidth), null);
-				} else if (board[y][x] instanceof HousePiece) {
-			        g2d.drawImage(iconHouse, (int)(x*eachCellXWidth), (int)(y*eachCellYWidth), (int) (eachCellXWidth), (int) (eachCellYWidth), null);
-				}
+				//if (board[y][x] instanceof GrassPiece) {
+			    //    g2d.drawImage(board[y][x], (int)(x*eachCellXWidth), (int)(y*eachCellYWidth), (int) (eachCellXWidth), (int) (eachCellYWidth), null);
+				//} else if (board[y][x] instanceof RoadPiece) {
+			    //    g2d.drawImage(iconRoad, (int)(x*eachCellXWidth), (int)(y*eachCellYWidth), (int) (eachCellXWidth), (int) (eachCellYWidth), null);
+				//} else if (board[y][x] instanceof HousePiece) {
+			    //    g2d.drawImage(iconHouse, (int)(x*eachCellXWidth), (int)(y*eachCellYWidth), (int) (eachCellXWidth), (int) (eachCellYWidth), null);
+				//}
+				
+				/* Visualize the piece */
+			    g2d.drawImage(board[y][x].getPieceImage(), (int)(x*eachCellXWidth), (int)(y*eachCellYWidth), (int) (eachCellXWidth), (int) (eachCellYWidth), null);
+
 				
 			}
 		}

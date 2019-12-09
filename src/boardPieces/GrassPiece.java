@@ -1,14 +1,30 @@
 package boardPieces;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import Interfaces.BoardPieceInterface;
 
 public class GrassPiece implements BoardPieceInterface{
 	private int xPos;
 	private int yPos;
+	private static BufferedImage icon;
 	
 	public GrassPiece(int xPos, int yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
+		
+		if (icon == null) {
+			try {
+				icon = ImageIO.read(getClass().getResource("/boardPieces/GrassImage.jpg"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	@Override
 	public int getXPosition() {
@@ -39,5 +55,10 @@ public class GrassPiece implements BoardPieceInterface{
 	public String getPieceName() {
 		return "Grass Piece";
 	}
+	@Override
+	public BufferedImage getPieceImage() {
+		return icon;
+	}
+	
 	
 }

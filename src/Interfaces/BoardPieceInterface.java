@@ -1,5 +1,7 @@
 package Interfaces;
 
+import java.awt.image.BufferedImage;
+
 public interface BoardPieceInterface {
 	public int getXPosition();
 	public int getYPosition();
@@ -7,4 +9,5 @@ public interface BoardPieceInterface {
 	public int getNumResidents();
 	public double getCostToBuild();
 	public String getPieceName();
+	public BufferedImage getPieceImage();
 }
