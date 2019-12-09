@@ -115,9 +115,9 @@ public class BoardVisualizerWidget extends JPanel implements MouseListener {
 		/* Make sure they didnt cancel */
 		if (input == null) {return;}
 		
-		if (input.contentEquals("House")) {
+		if (input.contains("House")) {
 			this.model.construct(new HousePiece((int)(temp.getWidth()), ((int)(temp.getHeight()))));
-		} else if (input.contentEquals("Road")) {
+		} else if (input.contains("Road")) {
 			this.model.construct(new RoadPiece((int)(temp.getWidth()), ((int)(temp.getHeight()))));
 		}
 		

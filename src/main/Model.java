@@ -23,7 +23,7 @@ public class Model {
 		/* Set default value for instance variables */
 		board = new BoardPieceInterface[BOARD_Y][BOARD_X];
 		balance = 5000.0;
-		day = 0;
+		day = 1;
 		observers = new ArrayList<Interfaces.ModelObserver>();
 		
 		/* Set all the pieces to grass pieces */
@@ -80,8 +80,8 @@ public class Model {
 		/* Create an empty list */
 		List<String> potentialOptions = new ArrayList<String>();
 		/* Add whatever we have enough money for */
-		if (this.getBalance() >= ((new HousePiece(-1,-1)).getCostToBuild())) { potentialOptions.add("House"); }
-		if (this.getBalance() >= (new RoadPiece(-1,-1).getCostToBuild())) { potentialOptions.add("Road"); }
+		if (this.getBalance() >= ((new HousePiece(-1,-1)).getCostToBuild())) { potentialOptions.add("House: $" + (new HousePiece(1,1).getCostToBuild())); }
+		if (this.getBalance() >= (new RoadPiece(-1,-1).getCostToBuild())) { potentialOptions.add("Road: $" + (new RoadPiece(1,1).getCostToBuild()) ); }
 		
 		/* Validate list size before returning */
 		if (potentialOptions.size() != 0) {
@@ -104,6 +104,13 @@ public class Model {
 		notifyObservers(ModelObserver.EventTypes.DAILYINCOME_CHANGED);
 		notifyObservers(ModelObserver.EventTypes.POPULATION_CHANGED);
 		notifyObservers(ModelObserver.EventTypes.BOARD_CHANGED);
+	}
+	
+	public void nextDay() {
+		EventLog.getEventLog().addEntry("Day "+  day++ + " has ended.");
+		this.balance += this.getDailyIncome();
+		notifyObservers(ModelObserver.EventTypes.BALANCE_CHANGED);
+		notifyObservers(ModelObserver.EventTypes.DAY_CHANGED);
 	}
 	
 	/* Observable Methods */

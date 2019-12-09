@@ -14,7 +14,6 @@ public class Controller implements ViewObserver {
 
 	@Override
 	public void nextDayButtonClicked() {
-		System.out.println("Controller has been notified that next day button has been clicked");
-		model.addToBalance(50);
+		model.nextDay();
 	}
 }

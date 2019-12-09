@@ -26,6 +26,7 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 	private JTextArea logLabel;
 	
 	private JButton nextDayButton;
+	private JButton helpButton;
 	
 	private Model model;
 	private GridBagConstraints c;
@@ -53,6 +54,7 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 		c.gridy = 0;
 		c.gridheight = 7;
 		this.add(boardDrawer, c);
+		
 		
 		/* Add Money Label */
 		moneyLabel = new JLabel("<html><b>Balance: </b>" + model.getBalance() + "</html>");
@@ -87,11 +89,18 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 		c.gridy = 4;
 		this.add(nextDayButton, c);
 		
-		/* Set up log visualizer */
-		logLabel = new JTextArea(20,20);
-		logLabel.setEditable(false);
+		/* Add help button */
+		helpButton = new JButton("Help");
+		helpButton.setActionCommand("HelpButton");
 		c.gridx = 1;
 		c.gridy = 5;
+		this.add(helpButton, c);
+		
+		/* Set up log visualizer */
+		logLabel = new JTextArea(40,22);
+		logLabel.setEditable(false);
+		c.gridx = 1;
+		c.gridy = 6;
 		this.add(new JScrollPane(logLabel), c);
 		
 		/* Add the View as a ModelObserver */
@@ -110,7 +119,7 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 	@Override
 	public void PopulationChanged() {
 		System.out.println("<html><b>Population: </b>" + model.getPopulation() + "</html>");
-		populationLabel.setText("Population: " + model.getPopulation());
+		populationLabel.setText(("<html><b>Population: </b>" + model.getPopulation() + "</html>"));
 	}
 
 	@Override
@@ -129,9 +138,6 @@ public class View extends JPanel implements Interfaces.ModelObserver, ActionList
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().contentEquals("NextDayButton")) {
-			System.out.println("View Detects that NextDayButton has been clicked");
-			EventLog.getEventLog().addEntry("Next Day button clicked");
-
 			notifyObservers(ViewObserver.ViewEvent.NEXTDAYBUTTONCLICKED);
 		}
 	}
