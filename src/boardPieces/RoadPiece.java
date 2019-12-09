@@ -10,7 +10,7 @@ import Interfaces.BoardPieceInterface;
 public class RoadPiece extends AbstractBoardPiece implements BoardPieceInterface {
 	public enum roadType { HORIZONTAL, VERTICAL, INTERSECTION, ENDPIECE, TLCORNER, TRCORNER, BRCORNER, BLCORNER}
 	private BufferedImage icon;
-	public static double costToConstruct = 1000.0;
+	public static double costToConstruct = 500.0;
 	
 	public RoadPiece(int xPos, int yPos) {
 		super(xPos, yPos, "Road Piece");

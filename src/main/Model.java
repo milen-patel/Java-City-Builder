@@ -26,15 +26,22 @@ public class Model {
 		balance = 5000.0;
 		day = 1;
 		observers = new ArrayList<Interfaces.ModelObserver>();
-		
+
 		/* Set all the pieces to grass pieces */
-		for (int y=0; y<board.length; y++) {
-			for (int x=0; x<board[0].length; x++) {
-				board[y][x] = new GrassPiece(x,y);
+		for (int y = 0; y < board.length; y++) {
+			for (int x = 0; x < board[0].length; x++) {
+				if (x == 0) {
+					/* Start the user with a row of road */
+					board[y][x] = new RoadPiece(x, y);
+					/* We built roads, so we dont want to inflate the price from the start */
+					RoadPiece.costToConstruct = 1000;
+				} else {
+					board[y][x] = new GrassPiece(x, y);
+				}
 			}
 		}
 	}
-	
+
 	/* Returns the board, but cloned */
 	public BoardPieceInterface[][] getBoard() {
 		return this.board;
@@ -88,10 +95,12 @@ public class Model {
 		}
 		
 		/* Add whatever we have enough money for */
-		//TODO make cost method be static
-		if (this.getBalance() >= HousePiece.costToConstruct) { potentialOptions.add("House: $" + View.round(HousePiece.costToConstruct, 2)); }
-		if (this.getBalance() >= RoadPiece.costToConstruct) { potentialOptions.add("Road: $" + View.round(RoadPiece.costToConstruct,2)); }
-		if (this.getBalance() >= ApartmentPiece.costToConstruct) { potentialOptions.add("Apartment: $" + View.round(ApartmentPiece.costToConstruct,2)); }
+		if (this.getBalance() >= HousePiece.costToConstruct && isPieceTouchingRoad(x,y)) { potentialOptions.add("House: $" + View.round(HousePiece.costToConstruct, 2)); }
+		System.out.println("Cost: " + RoadPiece.costToConstruct);
+		System.out.println("Balanace: " + this.getBalance());
+		System.out.println("Balance>Cost:" + (this.getBalance() >= RoadPiece.costToConstruct));
+		if (this.getBalance() >= RoadPiece.costToConstruct && isPieceTouchingRoad(x,y)) { potentialOptions.add("Road: $" + View.round(RoadPiece.costToConstruct,2)); }
+		if (this.getBalance() >= ApartmentPiece.costToConstruct && isPieceTouchingRoad(x,y)) { potentialOptions.add("Apartment: $" + View.round(ApartmentPiece.costToConstruct,2)); }
 		/* Validate list size before returning */
 		if (potentialOptions.size() != 0) {
 			return potentialOptions.toArray(new String[potentialOptions.size()]);
@@ -135,6 +144,19 @@ public class Model {
 		this.balance += this.getDailyIncome();
 		notifyObservers(ModelObserver.EventTypes.BALANCE_CHANGED);
 		notifyObservers(ModelObserver.EventTypes.DAY_CHANGED);
+	}
+	
+	public boolean isPieceTouchingRoad(int x, int y) {
+		/* Test right above, if possible */
+		if (y != 0 && board[y-1][x] instanceof RoadPiece) { return true; }
+		/* Rest right below, if possible */
+		if (y != BOARD_Y-1 && board[y+1][x] instanceof RoadPiece) { return true; }
+		/* Test right spot, if possible */
+		if (x != BOARD_X-1 && board[y][x+1] instanceof RoadPiece) { return true; }
+		/* Test left spot, if possible */
+		if (x != 0 && board[y][x-1] instanceof RoadPiece) { return true; }
+		/* If none of the cases work, then no */
+		return false;
 	}
 	
 	/* Observable Methods */
