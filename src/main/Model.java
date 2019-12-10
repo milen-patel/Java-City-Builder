@@ -36,7 +36,13 @@ public class Model {
 				}
 			}
 		}
-		//TODO: Randomly place water over map
+		/* Place some water at the top of the board */
+		for (int i=0; i<=3; i++) {
+			for (int j=1; j<=4-i; j++) {
+				board[i][BOARD_X-j] = new WaterPiece(i, BOARD_X-j);
+			}
+		}
+		
 	}
 
 	/* Returns the board, but cloned */
@@ -83,7 +89,7 @@ public class Model {
 		/* Create an empty list */
 		List<String> potentialOptions = new ArrayList<String>();
 		/* If something has already been constructed here, only allow for demolish */
-		if (!(board[y][x] instanceof GrassPiece) && this.getBalance() >= COST_TO_DEMOLISH) { 
+		if (!(board[y][x] instanceof GrassPiece) && this.getBalance() >= COST_TO_DEMOLISH && !(board[y][x] instanceof WaterPiece)) { 
 			potentialOptions.add("Demolish: $" + COST_TO_DEMOLISH);
 			return potentialOptions.toArray(new String[potentialOptions.size()]);
 			
