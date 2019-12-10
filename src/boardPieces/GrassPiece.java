@@ -43,5 +43,9 @@ public class GrassPiece extends AbstractBoardPiece implements BoardPieceInterfac
 		return icon;
 	}
 	
+	@Override
+	public void updateCost() {
+		return;	
+	}
 	
 }

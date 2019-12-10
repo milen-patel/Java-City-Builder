@@ -5,37 +5,41 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class WaterPiece extends AbstractBoardPiece implements boardPieces.BoardPieceInterface {
+public class RetailPiece extends AbstractBoardPiece implements BoardPieceInterface{
+	private double income;
 	private BufferedImage icon;
-
-	public WaterPiece(int xPos, int yPos) {
-		super(xPos, yPos, "Water Piece");
-		
+	public static double costToConstruct = 50000.0; 
+	
+	public RetailPiece(int xPos, int yPos) {
+		super(xPos, yPos, "Retail Piece");
+		this.income = Math.random()*100 + 10250.50;
 		
 		if (icon == null) {
 			try {
-				icon = ImageIO.read(getClass().getResource("/boardPieces/WaterImage.jpeg"));
+				icon = ImageIO.read(getClass().getResource("/boardPieces/RetailImage.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+		
+
 	}
 
 	@Override
 	public double getDailyIncome() {
-		return 0;
+		return income;
 	}
-
+	
 	@Override
 	public int getNumResidents() {
+		/* No one can live in a park */
 		return 0;
 	}
-
 	@Override
 	public double getCostToBuild() {
-		return 10000000000.0;
+		return costToConstruct;
 	}
 
 	@Override
@@ -45,7 +49,7 @@ public class WaterPiece extends AbstractBoardPiece implements boardPieces.BoardP
 
 	@Override
 	public void updateCost() {
-		return;	
+		/* Make it more expensive to construct the next one */
+		costToConstruct *= (1 + Math.random());		
 	}
-
 }

@@ -36,5 +36,10 @@ public interface BoardPieceInterface {
 	 * to use
 	 */
 	public BufferedImage getPieceImage();
+	
+	/*
+	 * As successive units of a piece are constructed, we want the price of construction to increase
+	 */
+	public void updateCost();
 
 }

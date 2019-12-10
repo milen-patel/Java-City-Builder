@@ -26,8 +26,7 @@ public class HousePiece extends AbstractBoardPiece implements BoardPieceInterfac
 			}
 		}
 		
-		/* Make it more expensive to construct the next one */
-		costToConstruct *= (1 + Math.random());
+
 	}
 
 	@Override
@@ -37,7 +36,6 @@ public class HousePiece extends AbstractBoardPiece implements BoardPieceInterfac
 	
 	@Override
 	public int getNumResidents() {
-		/* No one can live on empty pieces */
 		return residents;
 	}
 	@Override
@@ -50,4 +48,9 @@ public class HousePiece extends AbstractBoardPiece implements BoardPieceInterfac
 		return icon;
 	}
 
+	@Override
+	public void updateCost() {
+		/* Make it more expensive to construct the next one */
+		costToConstruct *= (1 + Math.random());		
+	}
 }

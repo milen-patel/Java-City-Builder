@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 public class ApartmentPiece extends AbstractBoardPiece implements BoardPieceInterface{
 	private double income;
 	private int residents;
-	private BufferedImage icon; 
+	private static BufferedImage icon; 
 	public static double costToConstruct = 10000;
 	
 	
@@ -19,16 +19,13 @@ public class ApartmentPiece extends AbstractBoardPiece implements BoardPieceInte
 		
 		if (icon == null) {
 			try {
-				icon = ImageIO.read(getClass().getResource("/boardPieces/ApartmentPiece.png"));
+				icon = ImageIO.read(getClass().getResource("/boardPieces/ApartmentImage.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
-		/* Make it more expensive to construct the next one */
-		costToConstruct *= (1 + Math.random());
 		
 	}
 	
@@ -51,6 +48,12 @@ public class ApartmentPiece extends AbstractBoardPiece implements BoardPieceInte
 	@Override
 	public BufferedImage getPieceImage() {
 		return icon;
+	}
+
+	@Override
+	public void updateCost() {
+		/* Make it more expensive to construct the next one */
+		costToConstruct *= (1 + Math.random());		
 	}
 
 }

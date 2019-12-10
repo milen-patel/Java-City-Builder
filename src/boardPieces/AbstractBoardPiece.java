@@ -43,4 +43,6 @@ public abstract class AbstractBoardPiece implements boardPieces.BoardPieceInterf
 	public abstract double getCostToBuild();
 
 	public abstract BufferedImage getPieceImage();
+	
+	public abstract void updateCost();
 }

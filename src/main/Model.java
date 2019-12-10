@@ -15,12 +15,14 @@ public class Model {
 	private double balance;
 	private int day;
 	private List<main.ModelObserver> observers;
+	private double happiness; 
 	
 	public Model() {
 		/* Set default value for instance variables */
 		board = new BoardPieceInterface[BOARD_Y][BOARD_X];
 		balance = 5000.0;
 		day = 1;
+		happiness = 0.000;
 		observers = new ArrayList<main.ModelObserver>();
 
 		/* Set all the pieces to grass pieces */
@@ -43,6 +45,13 @@ public class Model {
 			}
 		}
 		
+		/* Place some water in the middle of the board */
+		for (int x=(BOARD_X/2)-1; x<=(BOARD_X/2)+1; x++) {
+			for (int y=(BOARD_Y/2)-1; y<=(BOARD_Y/2)+1; y++) {
+				board[y][x] = new WaterPiece(x,y);
+			}
+		}
+		
 	}
 
 	/* Returns the board, but cloned */
@@ -59,6 +68,8 @@ public class Model {
 	}
 	
 	public void addToBalance(double amount) {
+		/* Stop it from printing to the screen after every day */
+		if (amount == 0.0) { return; } 
 		balance += amount;
 		notifyObservers(main.ModelObserver.EventTypes.BALANCE_CHANGED);
 		EventLog.getEventLog().addEntry("Balance has been changed by: $" + amount);
@@ -99,11 +110,11 @@ public class Model {
 		
 		/* Add whatever we have enough money for */
 		if (this.getBalance() >= HousePiece.costToConstruct && isPieceTouchingRoad(x,y)) { potentialOptions.add("House: $" + View.round(HousePiece.costToConstruct, 2)); }
-		System.out.println("Cost: " + RoadPiece.costToConstruct);
-		System.out.println("Balanace: " + this.getBalance());
-		System.out.println("Balance>Cost:" + (this.getBalance() >= RoadPiece.costToConstruct));
 		if (this.getBalance() >= RoadPiece.costToConstruct && isPieceTouchingRoad(x,y)) { potentialOptions.add("Road: $" + View.round(RoadPiece.costToConstruct,2)); }
 		if (this.getBalance() >= ApartmentPiece.costToConstruct && isPieceTouchingRoad(x,y)) { potentialOptions.add("Apartment: $" + View.round(ApartmentPiece.costToConstruct,2)); }
+		if (this.getBalance() >= FactoryPiece.costToConstruct && isPieceTouchingWater(x,y) && isPieceTouchingRoad(x,y)) { potentialOptions.add("Factory: $" + View.round(FactoryPiece.costToConstruct, 2)); } 
+		if (this.getBalance() >= ParkPiece.costToConstruct && isPieceTouchingWater(x,y)) { potentialOptions.add("Park: $" + View.round(ParkPiece.costToConstruct, 2)); }
+		if (this.getBalance() >= RetailPiece.costToConstruct && isPieceTouchingRoad(x,y)) { potentialOptions.add("Retail: $" + View.round(RetailPiece.costToConstruct, 2)); }
 		/* Validate list size before returning */
 		if (potentialOptions.size() != 0) {
 			return potentialOptions.toArray(new String[potentialOptions.size()]);
@@ -120,11 +131,15 @@ public class Model {
 		board[piece.getYPosition()][piece.getXPosition()] = piece;
 		/* Add Log Notification */
 		EventLog.getEventLog().addEntry(piece.getPieceName() + " constructed at (" + piece.getXPosition() + ", " + piece.getYPosition() + ").");
+		/* Make the piece more expensive to construct */
+		piece.updateCost();
 		/* Notify observers */
 		notifyObservers(ModelObserver.EventTypes.BALANCE_CHANGED);
 		notifyObservers(ModelObserver.EventTypes.DAILYINCOME_CHANGED);
 		notifyObservers(ModelObserver.EventTypes.POPULATION_CHANGED);
 		notifyObservers(ModelObserver.EventTypes.BOARD_CHANGED);
+		recomputeHappiness();
+
 	}
 	
 	public void demolish(int x, int y) {
@@ -135,11 +150,13 @@ public class Model {
 		/* Make it more expensive to demolish the next spot */
 		COST_TO_DEMOLISH *= 2;
 		/* Write to log */
-		EventLog.getEventLog().addEntry("Building demolished at (" + x + ", " + y + ")");
+		EventLog.getEventLog().addEntry("Building demolished at (" + x + ", " + y + ")");		
 		/* Notify Observers */
 		notifyObservers(ModelObserver.EventTypes.BOARD_CHANGED);
 		notifyObservers(ModelObserver.EventTypes.POPULATION_CHANGED);
 		notifyObservers(ModelObserver.EventTypes.DAILYINCOME_CHANGED);
+		recomputeHappiness();
+
 	}
 	
 	public void nextDay() {
@@ -147,6 +164,8 @@ public class Model {
 		this.balance += this.getDailyIncome();
 		notifyObservers(ModelObserver.EventTypes.BALANCE_CHANGED);
 		notifyObservers(ModelObserver.EventTypes.DAY_CHANGED);
+		this.addToBalance(this.getHappiness()*100);
+		recomputeHappiness();
 	}
 	
 	public boolean isPieceTouchingRoad(int x, int y) {
@@ -162,6 +181,19 @@ public class Model {
 		return false;
 	}
 	
+	public boolean isPieceTouchingWater(int x, int y) {
+		/* Test right above, if possible */
+		if (y != 0 && board[y-1][x] instanceof WaterPiece) { return true; }
+		/* Rest right below, if possible */
+		if (y != BOARD_Y-1 && board[y+1][x] instanceof WaterPiece) { return true; }
+		/* Test right spot, if possible */
+		if (x != BOARD_X-1 && board[y][x+1] instanceof WaterPiece) { return true; }
+		/* Test left spot, if possible */
+		if (x != 0 && board[y][x-1] instanceof WaterPiece) { return true; }
+		/* If none of the cases work, then no */
+		return false;
+	}
+	
 	/* Observable Methods */
 	public void addObserver(main.ModelObserver o) {
 		observers.add(o);
@@ -170,6 +202,7 @@ public class Model {
 		observers.remove(o);
 	}
 	public void notifyObservers(main.ModelObserver.EventTypes eventType) {
+		/* Notify each observer based on what the event was */
 		for (main.ModelObserver o : observers) {
 			if (eventType == main.ModelObserver.EventTypes.BALANCE_CHANGED) {
 				o.BalanceChanged();
@@ -181,7 +214,21 @@ public class Model {
 				o.PopulationChanged();
 			} else if (eventType == main.ModelObserver.EventTypes.BOARD_CHANGED) {
 				o.BoardChanged();
+			} else if (eventType == main.ModelObserver.EventTypes.HAPPINESS_CHANGED) {
+				o.HappinessChanged();
 			}
 		}
+	}
+
+	public double getHappiness() {
+		return happiness;
+	}
+	public void recomputeHappiness() {
+		/* Every person should add 0.01 to total happiness
+		 * But, if the dwelling is touching a factory, it should decrease total happiness by 10
+		 * If the dwelling is touching water or a park, then it should increase happiness by 0.05/person
+		 */
+		/* Notify observers */
+		notifyObservers(ModelObserver.EventTypes.HAPPINESS_CHANGED);
 	}
 }

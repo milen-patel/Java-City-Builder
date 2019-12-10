@@ -24,6 +24,7 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 	private JLabel dailyIncomeLabel;
 	private JLabel populationLabel;
 	private JLabel dayLabel; 
+	private JLabel happinessLabel;
 	private JTextArea logLabel;
 	
 	private JButton nextDayButton;
@@ -81,12 +82,18 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 		c.gridy = 3;
 		this.add(dayLabel, c);
 		
+		/* Add happiness label */
+		happinessLabel = new JLabel("<html><b>Happiness: </b>" + model.getHappiness() + "</html>");
+		c.gridx = 2;
+		c.gridy = 4;
+		this.add(happinessLabel, c);
+		
 		/* Add Next Day Button */
 		nextDayButton = new JButton("Next Day");
 		nextDayButton.setActionCommand("NextDayButton");
 		nextDayButton.addActionListener(this);
 		c.gridx = 2;
-		c.gridy = 4;
+		c.gridy = 5;
 		this.add(nextDayButton, c);
 		
 		/* Add help button */
@@ -135,6 +142,12 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 		dayLabel.setText("<html><b>Day: </b>" + model.getDay() + "</html>");
 
 	}
+	
+	@Override
+	public void HappinessChanged() {
+		happinessLabel.setText("<html><b>Happiness: </b>" + round(model.getHappiness(),2) + "</html>");
+	}
+
 
 	@Override
 	//TODO: Make the help button more useful
@@ -175,5 +188,6 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 	    return bd.doubleValue();
 	}
 
+	
 
 }

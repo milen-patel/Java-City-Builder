@@ -16,11 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import boardPieces.ApartmentPiece;
-import boardPieces.BoardPieceInterface;
-import boardPieces.GrassPiece;
-import boardPieces.HousePiece;
-import boardPieces.RoadPiece;
+import boardPieces.*;
 
 public class BoardVisualizerWidget extends JPanel implements MouseListener {
 	// TODO: No need to encapsulate board if we encapsulate the model
@@ -105,6 +101,12 @@ public class BoardVisualizerWidget extends JPanel implements MouseListener {
 			this.model.construct(new ApartmentPiece((int) (temp.getWidth()), (int) (temp.getHeight())));
 		} else if (input.contains("Demolish")) {
 			this.model.demolish((int) (temp.getWidth()), (int) (temp.getHeight()));
+		} else if (input.contains("Factory")) {
+			this.model.construct(new FactoryPiece((int) (temp.getWidth()), (int)(temp.getHeight())));
+		} else if (input.contains("Park")) {
+			this.model.construct(new ParkPiece((int)(temp.getWidth()),(int)(temp.getHeight())));;
+		} else if (input.contains("Retail")) {
+			this.model.construct(new RetailPiece((int)(temp.getWidth()),(int)(temp.getHeight())));;
 		}
 		//TODO make these variables into integers instead of casting each time we want to use them
 
