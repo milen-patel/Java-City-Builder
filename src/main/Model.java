@@ -164,6 +164,7 @@ public class Model {
 		this.balance += this.getDailyIncome();
 		notifyObservers(ModelObserver.EventTypes.BALANCE_CHANGED);
 		notifyObservers(ModelObserver.EventTypes.DAY_CHANGED);
+		notifyObservers(ModelObserver.EventTypes.BOARD_CHANGED);
 		this.addToBalance(this.getHappiness()*100);
 		recomputeHappiness();
 	}

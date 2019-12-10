@@ -44,6 +44,17 @@ public class WaterPiece extends AbstractBoardPiece implements boardPieces.BoardP
 	}
 
 	@Override
+	public BufferedImage getSecondaryImage() {
+		return getPieceImage();
+	}
+
+
+	@Override
+	public BufferedImage getThirdImage() {
+		return getPieceImage();
+	}
+
+	@Override
 	public void updateCost() {
 		return;	
 	}

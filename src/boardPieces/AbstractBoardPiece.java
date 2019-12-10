@@ -45,4 +45,8 @@ public abstract class AbstractBoardPiece implements boardPieces.BoardPieceInterf
 	public abstract BufferedImage getPieceImage();
 	
 	public abstract void updateCost();
+	
+	public abstract BufferedImage getSecondaryImage();
+	
+	public abstract BufferedImage getThirdImage();
 }

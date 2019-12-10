@@ -48,6 +48,18 @@ public class HousePiece extends AbstractBoardPiece implements BoardPieceInterfac
 		return icon;
 	}
 
+
+	@Override
+	public BufferedImage getSecondaryImage() {
+		return getPieceImage();
+	}
+
+
+	@Override
+	public BufferedImage getThirdImage() {
+		return getPieceImage();
+	}
+	
 	@Override
 	public void updateCost() {
 		/* Make it more expensive to construct the next one */

@@ -56,4 +56,16 @@ public class ApartmentPiece extends AbstractBoardPiece implements BoardPieceInte
 		costToConstruct *= (1 + Math.random());		
 	}
 
+
+	@Override
+	public BufferedImage getSecondaryImage() {
+		return getPieceImage();
+	}
+
+
+	@Override
+	public BufferedImage getThirdImage() {
+		return getPieceImage();
+	}
+
 }

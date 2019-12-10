@@ -46,6 +46,18 @@ public class ParkPiece extends AbstractBoardPiece implements BoardPieceInterface
 	public BufferedImage getPieceImage() {
 		return icon;
 	}
+	
+
+	@Override
+	public BufferedImage getSecondaryImage() {
+		return getPieceImage();
+	}
+
+
+	@Override
+	public BufferedImage getThirdImage() {
+		return getPieceImage();
+	}
 
 	@Override
 	public void updateCost() {
