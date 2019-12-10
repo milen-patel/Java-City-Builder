@@ -29,6 +29,7 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 	
 	private JButton nextDayButton;
 	private JButton helpButton;
+	private JButton playButton;
 	
 	private Model model;
 	private GridBagConstraints c;
@@ -51,7 +52,7 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 		boardDrawer = new BoardVisualizerWidget(model);
 		c.gridx = 0;
 		c.gridy = 0;
-		c.gridheight = 7;
+		c.gridheight = 10;
 		this.add(boardDrawer, c);
 		
 	    c.gridx = 1;
@@ -101,14 +102,14 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 		helpButton.setActionCommand("HelpButton");
 		helpButton.addActionListener(this);
 		c.gridx = 2;
-		c.gridy = 5;
+		c.gridy = 6;
 		this.add(helpButton, c);
 		
 		/* Set up log visualizer */
-		logLabel = new JTextArea(40,22);
+		logLabel = new JTextArea(20,22);
 		logLabel.setEditable(false);
 		c.gridx = 2;
-		c.gridy = 6;
+		c.gridy = 7;
 		this.add(new JScrollPane(logLabel), c);
 		
 		/* Add the View as a ModelObserver */
