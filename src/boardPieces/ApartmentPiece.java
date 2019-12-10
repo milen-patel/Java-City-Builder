@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import Interfaces.BoardPieceInterface;
-
 public class ApartmentPiece extends AbstractBoardPiece implements BoardPieceInterface{
 	private double income;
 	private int residents;

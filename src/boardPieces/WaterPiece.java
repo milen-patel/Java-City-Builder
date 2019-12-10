@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class WaterPiece extends AbstractBoardPiece implements Interfaces.BoardPieceInterface {
+public class WaterPiece extends AbstractBoardPiece implements boardPieces.BoardPieceInterface {
 	private BufferedImage icon;
 
 	public WaterPiece(int xPos, int yPos) {

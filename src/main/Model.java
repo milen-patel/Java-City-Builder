@@ -3,10 +3,6 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 
-import Interfaces.BoardPieceInterface;
-import Interfaces.ModelObserver;
-import boardPieces.GrassPiece;
-import boardPieces.HousePiece;
 import boardPieces.*;
 
 public class Model {
@@ -18,14 +14,14 @@ public class Model {
 	private BoardPieceInterface[][] board;
 	private double balance;
 	private int day;
-	private List<Interfaces.ModelObserver> observers;
+	private List<main.ModelObserver> observers;
 	
 	public Model() {
 		/* Set default value for instance variables */
 		board = new BoardPieceInterface[BOARD_Y][BOARD_X];
 		balance = 5000.0;
 		day = 1;
-		observers = new ArrayList<Interfaces.ModelObserver>();
+		observers = new ArrayList<main.ModelObserver>();
 
 		/* Set all the pieces to grass pieces */
 		for (int y = 0; y < board.length; y++) {
@@ -58,7 +54,7 @@ public class Model {
 	
 	public void addToBalance(double amount) {
 		balance += amount;
-		notifyObservers(Interfaces.ModelObserver.EventTypes.BALANCE_CHANGED);
+		notifyObservers(main.ModelObserver.EventTypes.BALANCE_CHANGED);
 		EventLog.getEventLog().addEntry("Balance has been changed by: $" + amount);
 	}
 	
@@ -161,23 +157,23 @@ public class Model {
 	}
 	
 	/* Observable Methods */
-	public void addObserver(Interfaces.ModelObserver o) {
+	public void addObserver(main.ModelObserver o) {
 		observers.add(o);
 	}
-	public void removeObserver(Interfaces.ModelObserver o) {
+	public void removeObserver(main.ModelObserver o) {
 		observers.remove(o);
 	}
-	public void notifyObservers(Interfaces.ModelObserver.EventTypes eventType) {
-		for (Interfaces.ModelObserver o : observers) {
-			if (eventType == Interfaces.ModelObserver.EventTypes.BALANCE_CHANGED) {
+	public void notifyObservers(main.ModelObserver.EventTypes eventType) {
+		for (main.ModelObserver o : observers) {
+			if (eventType == main.ModelObserver.EventTypes.BALANCE_CHANGED) {
 				o.BalanceChanged();
-			} else if (eventType == Interfaces.ModelObserver.EventTypes.DAILYINCOME_CHANGED) {
+			} else if (eventType == main.ModelObserver.EventTypes.DAILYINCOME_CHANGED) {
 				o.DailyIncomeChanged();
-			} else if (eventType == Interfaces.ModelObserver.EventTypes.DAY_CHANGED) {
+			} else if (eventType == main.ModelObserver.EventTypes.DAY_CHANGED) {
 				o.DayChanged();
-			} else if (eventType == Interfaces.ModelObserver.EventTypes.POPULATION_CHANGED) {
+			} else if (eventType == main.ModelObserver.EventTypes.POPULATION_CHANGED) {
 				o.PopulationChanged();
-			} else if (eventType == Interfaces.ModelObserver.EventTypes.BOARD_CHANGED) {
+			} else if (eventType == main.ModelObserver.EventTypes.BOARD_CHANGED) {
 				o.BoardChanged();
 			}
 		}

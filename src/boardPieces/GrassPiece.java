@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import Interfaces.BoardPieceInterface;
-
 public class GrassPiece extends AbstractBoardPiece implements BoardPieceInterface{
 	private static BufferedImage icon;
 	

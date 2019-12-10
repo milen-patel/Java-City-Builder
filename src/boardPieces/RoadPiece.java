@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import Interfaces.BoardPieceInterface;
-
 public class RoadPiece extends AbstractBoardPiece implements BoardPieceInterface {
 	public enum roadType { HORIZONTAL, VERTICAL, INTERSECTION, ENDPIECE, TLCORNER, TRCORNER, BRCORNER, BLCORNER}
 	private BufferedImage icon;

@@ -17,12 +17,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import Interfaces.*;
 import boardPieces.ApartmentPiece;
 import boardPieces.HousePiece;
 import boardPieces.RoadPiece;
 
-public class View extends JPanel implements Interfaces.ModelObserver, ActionListener, LogObserver{
+public class View extends JPanel implements main.ModelObserver, ActionListener, LogObserver{
 	/* Define instance variables */
 	private JLabel moneyLabel;
 	private JLabel dailyIncomeLabel;

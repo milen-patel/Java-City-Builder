@@ -2,7 +2,7 @@ package boardPieces;
 
 import java.awt.image.BufferedImage;
 
-public abstract class AbstractBoardPiece implements Interfaces.BoardPieceInterface {
+public abstract class AbstractBoardPiece implements boardPieces.BoardPieceInterface {
 	private int xPos;
 	private int yPos;
 	private String pieceName;

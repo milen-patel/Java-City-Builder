@@ -16,8 +16,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import Interfaces.BoardPieceInterface;
 import boardPieces.ApartmentPiece;
+import boardPieces.BoardPieceInterface;
 import boardPieces.GrassPiece;
 import boardPieces.HousePiece;
 import boardPieces.RoadPiece;

@@ -3,8 +3,6 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 
-import Interfaces.LogObserver;
-
 public class EventLog {
 
 	private List<String> events;

@@ -1,4 +1,4 @@
-package Interfaces;
+package boardPieces;
 
 import java.awt.image.BufferedImage;
 
