@@ -35,6 +35,8 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 	private GridBagConstraints c;
 	private BoardVisualizerWidget boardDrawer;
 
+	private boolean isAutoRunning;
+	private BackgroundRunner brunner;
 
 	public View(Model model) {
 		/* Encapsulate the model */
@@ -105,11 +107,19 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 		c.gridy = 6;
 		this.add(helpButton, c);
 		
+		/* Add play button */
+		playButton = new JButton("Play/Pause");
+		playButton.setActionCommand("PlayButton");
+		playButton.addActionListener(this);
+		c.gridx = 2;
+		c.gridy = 7;
+		this.add(playButton, c);
+		
 		/* Set up log visualizer */
 		logLabel = new JTextArea(20,22);
 		logLabel.setEditable(false);
 		c.gridx = 2;
-		c.gridy = 7;
+		c.gridy = 8;
 		this.add(new JScrollPane(logLabel), c);
 		
 		/* Add the View as a ModelObserver */
@@ -164,6 +174,16 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 			EventLog.getEventLog().addEntry("|--> Road: $" + View.round(RoadPiece.costToConstruct, 2));
 			EventLog.getEventLog().addEntry("|--> Demolish: $" + View.round(Model.COST_TO_DEMOLISH, 2));
 			EventLog.getEventLog().addEntry("--------------------------------");
+		} else if (e.getActionCommand().contentEquals("PlayButton")) {
+			if (isAutoRunning) {
+				isAutoRunning = false;
+				brunner.terminate();
+				brunner = null;
+			} else {
+				isAutoRunning = true;
+				brunner = new BackgroundRunner(model, 100);
+				brunner.start();
+			}
 		}
 	}
 	

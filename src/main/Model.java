@@ -55,19 +55,19 @@ public class Model {
 	}
 
 	/* Returns the board, but cloned */
-	public BoardPieceInterface[][] getBoard() {
+	public synchronized BoardPieceInterface[][] getBoard() {
 		return this.board;
 	}
 	
-	public double getBalance() {
+	public synchronized double getBalance() {
 		return balance;
 	}
 	
-	public int getDay() {
+	public synchronized int getDay() {
 		return day;
 	}
 	
-	public void addToBalance(double amount) {
+	public synchronized void addToBalance(double amount) {
 		/* Stop it from printing to the screen after every day */
 		if (amount == 0.0) { return; } 
 		balance += amount;
@@ -75,7 +75,7 @@ public class Model {
 		EventLog.getEventLog().addEntry("Balance has been changed by: $" + amount);
 	}
 	
-	public double getDailyIncome() {
+	public synchronized double getDailyIncome() {
 		double runningTotal = 0.0;
 		for (int y=0; y<board.length; y++) {
 			for(int x=0; x<board[0].length; x++) {
@@ -85,7 +85,7 @@ public class Model {
 		return runningTotal;
 	}
 	
-	public int getPopulation() {
+	public synchronized int getPopulation() {
 		int runningTotal = 0;
 		for (int y=0; y<board.length; y++) {
 			for(int x=0; x<board[0].length; x++) {
@@ -96,7 +96,7 @@ public class Model {
 	}
 	
 	
-	public String[] getAvailableChoices(int x, int y) {
+	public synchronized String[] getAvailableChoices(int x, int y) {
 		/* Create an empty list */
 		List<String> potentialOptions = new ArrayList<String>();
 		/* If something has already been constructed here, only allow for demolish */
@@ -124,7 +124,7 @@ public class Model {
 	}
 	
 	
-	public void construct(BoardPieceInterface piece) {
+	public synchronized void construct(BoardPieceInterface piece) {
 		/* Subtract balance */
 		balance -= piece.getCostToBuild();
 		/* Update Board */
@@ -142,7 +142,7 @@ public class Model {
 
 	}
 	
-	public void demolish(int x, int y) {
+	public synchronized void demolish(int x, int y) {
 		/* Change the board spot */
 		board[y][x] = new GrassPiece(x,y);
 		/* Charge the user */
@@ -159,7 +159,7 @@ public class Model {
 
 	}
 	
-	public void nextDay() {
+	public synchronized void nextDay() {
 		EventLog.getEventLog().addEntry("Day "+  day++ + " has ended.");
 		this.balance += this.getDailyIncome();
 		notifyObservers(ModelObserver.EventTypes.BALANCE_CHANGED);
@@ -168,7 +168,7 @@ public class Model {
 		recomputeHappiness();
 	}
 	
-	public boolean isPieceTouchingRoad(int x, int y) {
+	public synchronized boolean isPieceTouchingRoad(int x, int y) {
 		/* Test right above, if possible */
 		if (y != 0 && board[y-1][x] instanceof RoadPiece) { return true; }
 		/* Rest right below, if possible */
@@ -181,7 +181,7 @@ public class Model {
 		return false;
 	}
 	
-	public boolean isPieceTouchingWater(int x, int y) {
+	public synchronized boolean isPieceTouchingWater(int x, int y) {
 		/* Test right above, if possible */
 		if (y != 0 && board[y-1][x] instanceof WaterPiece) { return true; }
 		/* Rest right below, if possible */
@@ -220,11 +220,12 @@ public class Model {
 		}
 	}
 
-	public double getHappiness() {
+	public synchronized double getHappiness() {
 		return happiness;
 	}
-	public void recomputeHappiness() {
+	public synchronized void recomputeHappiness() {
 		//TODO: Provide implementation of this method
+		//TODO: Destruction should make sure that removing roads wont create unconnected road segments
 		/* Every person should add 0.01 to total happiness
 		 * But, if the dwelling is touching a factory, it should decrease total happiness by 10
 		 * If the dwelling is touching water or a park, then it should increase happiness by 0.05/person
