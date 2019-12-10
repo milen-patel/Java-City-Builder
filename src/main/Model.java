@@ -224,6 +224,7 @@ public class Model {
 		return happiness;
 	}
 	public void recomputeHappiness() {
+		//TODO: Provide implementation of this method
 		/* Every person should add 0.01 to total happiness
 		 * But, if the dwelling is touching a factory, it should decrease total happiness by 10
 		 * If the dwelling is touching water or a park, then it should increase happiness by 0.05/person

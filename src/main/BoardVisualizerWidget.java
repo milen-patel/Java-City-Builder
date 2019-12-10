@@ -17,26 +17,22 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import boardPieces.*;
-
+/*
+ * BoardVisualizerWidget is responsible for encapsulating an instance of the model and visualizing it on the UI
+ */
 public class BoardVisualizerWidget extends JPanel implements MouseListener {
-	// TODO: No need to encapsulate board if we encapsulate the model
 	public static final int BOARD_THICKNESS = 1;
-	private BoardPieceInterface[][] board;
 	private Model model;
 	Graphics2D g2d;
 
-	public BoardVisualizerWidget(BoardPieceInterface[][] board, Model model) {
+	public BoardVisualizerWidget(Model model) {
 		this.addMouseListener(this);
-		this.board = board;
 		this.setPreferredSize(new Dimension(900, 900));
 		this.model = model;
 		repaint();
 	}
 
-	public void repaint(BoardPieceInterface[][] board) {
-		this.board = board;
-		repaint();
-	}
+	
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -50,14 +46,14 @@ public class BoardVisualizerWidget extends JPanel implements MouseListener {
 		g2d.setColor(Color.BLACK);
 		g2d.setStroke(new BasicStroke(BOARD_THICKNESS));
 
-		for (int y = 0; y < board.length; y++) {
-			for (int x = 0; x < board[0].length; x++) {
+		for (int y = 0; y < model.getBoard().length; y++) {
+			for (int x = 0; x < model.getBoard()[0].length; x++) {
 				// Always draw rectangle
 				g2d.setColor(Color.LIGHT_GRAY);
 				g2d.drawRect((int) (x * eachCellXWidth), (int) (y * eachCellYWidth), (int) (eachCellXWidth),
 						(int) (eachCellYWidth));
 				/* Visualize the piece */
-				g2d.drawImage(board[y][x].getPieceImage(), (int) (x * eachCellXWidth), (int) (y * eachCellYWidth),
+				g2d.drawImage(model.getBoard()[y][x].getPieceImage(), (int) (x * eachCellXWidth), (int) (y * eachCellYWidth),
 						(int) (eachCellXWidth), (int) (eachCellYWidth), null);
 
 			}

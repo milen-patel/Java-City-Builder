@@ -48,7 +48,7 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 		
 		
 		/* Add board visualizer widget */
-		boardDrawer = new BoardVisualizerWidget(model.getBoard(), model);
+		boardDrawer = new BoardVisualizerWidget(model);
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridheight = 7;
