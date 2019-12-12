@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -49,7 +50,7 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 	public View(Model model) {
 		/* Encapsulate the model */
 		this.model = model;
-		
+		this.setBackground(Color.LIGHT_GRAY);
 		
 		/* Set the Layout */
 		this.setLayout(new GridBagLayout());
@@ -130,7 +131,7 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 		this.add(playButton, c);
 		
 		/* Set up log visualizer */
-		logLabel = new JTextArea(20,22);
+		logLabel = new JTextArea(45,22);
 		logLabel.setEditable(false);
 		c.gridx = 2;
 		c.gridy = 9;
