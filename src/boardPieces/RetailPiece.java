@@ -64,4 +64,9 @@ public class RetailPiece extends AbstractBoardPiece implements BoardPieceInterfa
 		/* Make it more expensive to construct the next one */
 		costToConstruct *= (1 + Math.random());		
 	}
+	
+	@Override
+	public int getNumEmployeePositions() {
+		return 250;
+	}
 }

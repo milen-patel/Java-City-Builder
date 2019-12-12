@@ -64,4 +64,9 @@ public class RoadPiece extends AbstractBoardPiece implements BoardPieceInterface
 		/* Make it more expensive to construct the next one */
 		costToConstruct *= (1 + Math.random()/15);		
 	}
+	
+	@Override
+	public int getNumEmployeePositions() {
+		return 0;
+	}
 }

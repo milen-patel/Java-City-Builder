@@ -60,4 +60,8 @@ public class GrassPiece extends AbstractBoardPiece implements BoardPieceInterfac
 		return;	
 	}
 	
+	@Override
+	public int getNumEmployeePositions() {
+		return 0;
+	}
 }

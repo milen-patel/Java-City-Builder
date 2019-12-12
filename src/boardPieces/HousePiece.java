@@ -9,6 +9,8 @@ public class HousePiece extends AbstractBoardPiece implements BoardPieceInterfac
 	private double income;
 	private int residents;
 	private BufferedImage icon;
+	private BufferedImage icon2;
+	private BufferedImage icon3;
 	public static double costToConstruct = 500.0; 
 	
 	public HousePiece(int xPos, int yPos) {
@@ -18,7 +20,10 @@ public class HousePiece extends AbstractBoardPiece implements BoardPieceInterfac
 		
 		if (icon == null) {
 			try {
-				icon = ImageIO.read(getClass().getResource("/boardPieces/HouseImage.png"));
+				icon = ImageIO.read(getClass().getResource("/boardPieces/HouseImageOne.jpg"));
+				icon2 = ImageIO.read(getClass().getResource("/boardPieces/HouseImageTwo.jpg"));
+				icon3 = ImageIO.read(getClass().getResource("/boardPieces/HouseImageThree.jpg"));
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
@@ -51,18 +56,23 @@ public class HousePiece extends AbstractBoardPiece implements BoardPieceInterfac
 
 	@Override
 	public BufferedImage getSecondaryImage() {
-		return getPieceImage();
+		return icon2;
 	}
 
 
 	@Override
 	public BufferedImage getThirdImage() {
-		return getPieceImage();
+		return icon3;
 	}
 	
 	@Override
 	public void updateCost() {
 		/* Make it more expensive to construct the next one */
 		costToConstruct *= (1 + Math.random());		
+	}
+	
+	@Override
+	public int getNumEmployeePositions() {
+		return 0;
 	}
 }

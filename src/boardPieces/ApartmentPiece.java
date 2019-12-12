@@ -68,4 +68,8 @@ public class ApartmentPiece extends AbstractBoardPiece implements BoardPieceInte
 		return getPieceImage();
 	}
 
+	@Override
+	public int getNumEmployeePositions() {
+		return 30;
+	}
 }

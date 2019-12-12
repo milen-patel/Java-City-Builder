@@ -17,7 +17,9 @@ import javax.swing.JTextArea;
 import boardPieces.ApartmentPiece;
 import boardPieces.HousePiece;
 import boardPieces.RoadPiece;
-
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 public class View extends JPanel implements main.ModelObserver, ActionListener, LogObserver{
 	/* Define instance variables */
 	private JLabel moneyLabel;
@@ -25,6 +27,7 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 	private JLabel populationLabel;
 	private JLabel dayLabel; 
 	private JLabel happinessLabel;
+	private JLabel unemploymentLabel;
 	private JTextArea logLabel;
 	
 	private JButton nextDayButton;
@@ -37,6 +40,8 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 
 	private boolean isAutoRunning;
 	private BackgroundRunner brunner;
+
+	private static NumberFormat myFormat = NumberFormat.getInstance();
 
 	public View(Model model) {
 		/* Encapsulate the model */
@@ -61,14 +66,14 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 	    this.add(new JLabel("   "), c);
 
 		/* Add Money Label */
-		moneyLabel = new JLabel("<html><b>Balance: </b>" + model.getBalance() + "</html>");
+		moneyLabel = new JLabel("<html><b>Balance: $</b>" + round(model.getBalance(),2) + "</html>");
 		c.gridx = 2;
 		c.gridy = 0;
 		c.gridheight = 1;
 		this.add(moneyLabel, c);
 		
 		/* Add daily income label */
-		dailyIncomeLabel = new JLabel("<html><b>Daily Income: </b>" + model.getDailyIncome() + "</html>");
+		dailyIncomeLabel = new JLabel("<html><b>Daily Income: $</b>" + round(model.getDailyIncome(),2) + "</html>");
 		c.gridx = 2;
 		c.gridy = 1;
 		this.add(dailyIncomeLabel, c);
@@ -91,12 +96,18 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 		c.gridy = 4;
 		this.add(happinessLabel, c);
 		
+		/* Add unemployment label */
+		unemploymentLabel = new JLabel("<html><b>Unemployement Rate: </b>" + model.getUnemploymentRate() + "</html>");
+		c.gridx = 2;
+		c.gridy = 5;
+		this.add(unemploymentLabel, c);
+		
 		/* Add Next Day Button */
 		nextDayButton = new JButton("Next Day");
 		nextDayButton.setActionCommand("NextDayButton");
 		nextDayButton.addActionListener(this);
 		c.gridx = 2;
-		c.gridy = 5;
+		c.gridy = 6;
 		this.add(nextDayButton, c);
 		
 		/* Add help button */
@@ -104,7 +115,7 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 		helpButton.setActionCommand("HelpButton");
 		helpButton.addActionListener(this);
 		c.gridx = 2;
-		c.gridy = 6;
+		c.gridy = 7;
 		this.add(helpButton, c);
 		
 		/* Add play button */
@@ -112,14 +123,14 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 		playButton.setActionCommand("PlayButton");
 		playButton.addActionListener(this);
 		c.gridx = 2;
-		c.gridy = 7;
+		c.gridy = 8;
 		this.add(playButton, c);
 		
 		/* Set up log visualizer */
 		logLabel = new JTextArea(20,22);
 		logLabel.setEditable(false);
 		c.gridx = 2;
-		c.gridy = 8;
+		c.gridy = 9;
 		this.add(new JScrollPane(logLabel), c);
 		
 		/* Add the View as a ModelObserver */
@@ -132,7 +143,7 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 	@Override
 	public void BalanceChanged() {
 		System.out.println("View Has Been Notified That Model's Balance Has Changed");
-		moneyLabel.setText("<html><b>Balance: </b>" + round(model.getBalance(),2) + "</html>");
+		moneyLabel.setText("<html><b>Balance: $</b>" + round(model.getBalance(),2) + "</html>");
 	}
 
 	@Override
@@ -144,7 +155,7 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 	@Override
 	public void DailyIncomeChanged() {
 		System.out.println("View Has Been Notified That Model's Daily Income Has Changed");
-		dailyIncomeLabel.setText("<html><b>Daily Income: </b>" + round(model.getDailyIncome(),2) + "</html>");
+		dailyIncomeLabel.setText("<html><b>Daily Income: $</b>" + round(model.getDailyIncome(),2) + "</html>");
 	}
 	
 	@Override
@@ -158,6 +169,12 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 	public void HappinessChanged() {
 		happinessLabel.setText("<html><b>Happiness: </b>" + round(model.getHappiness(),2) + "</html>");
 	}
+	
+	@Override
+	public void UnemployementChanged() {
+		unemploymentLabel.setText("<html><b>Unemployement: </b>" + model.getUnemploymentRate() + "</html>");		
+	}
+
 
 
 	@Override
@@ -201,13 +218,18 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 
 	/* Internal helper method used for rounding doubles when displaying UI elements */
 	//TODO: Make this return a string an add commas
-	public static double round(double value, int places) {
+	public static String round(double value, int places) {
 	    if (places < 0) throw new IllegalArgumentException();
 
 	    BigDecimal bd = BigDecimal.valueOf(value);
 	    bd = bd.setScale(places, RoundingMode.HALF_UP);
-	    return bd.doubleValue();
+	    myFormat.setGroupingUsed(true); // this will also round numbers, 3
+	    // decimal places
+	    return myFormat.format(bd.doubleValue());
+
+
 	}
+
 
 	
 

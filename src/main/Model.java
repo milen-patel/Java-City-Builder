@@ -100,7 +100,7 @@ public class Model {
 		/* Create an empty list */
 		List<String> potentialOptions = new ArrayList<String>();
 		/* If something has already been constructed here, only allow for demolish */
-		if (!(board[y][x] instanceof GrassPiece) && this.getBalance() >= COST_TO_DEMOLISH && !(board[y][x] instanceof WaterPiece)) { 
+		if (!(board[y][x] instanceof GrassPiece) && this.getBalance() >= COST_TO_DEMOLISH && !(board[y][x] instanceof WaterPiece) && !(board[y][x] instanceof RoadPiece)) { 
 			potentialOptions.add("Demolish: $" + COST_TO_DEMOLISH);
 			return potentialOptions.toArray(new String[potentialOptions.size()]);
 			
@@ -138,6 +138,7 @@ public class Model {
 		notifyObservers(ModelObserver.EventTypes.DAILYINCOME_CHANGED);
 		notifyObservers(ModelObserver.EventTypes.POPULATION_CHANGED);
 		notifyObservers(ModelObserver.EventTypes.BOARD_CHANGED);
+		notifyObservers(ModelObserver.EventTypes.UNEMPLOYEMENT_CHANGED);
 		recomputeHappiness();
 
 	}
@@ -155,6 +156,7 @@ public class Model {
 		notifyObservers(ModelObserver.EventTypes.BOARD_CHANGED);
 		notifyObservers(ModelObserver.EventTypes.POPULATION_CHANGED);
 		notifyObservers(ModelObserver.EventTypes.DAILYINCOME_CHANGED);
+		notifyObservers(ModelObserver.EventTypes.UNEMPLOYEMENT_CHANGED);
 		recomputeHappiness();
 
 	}
@@ -217,6 +219,8 @@ public class Model {
 				o.BoardChanged();
 			} else if (eventType == main.ModelObserver.EventTypes.HAPPINESS_CHANGED) {
 				o.HappinessChanged();
+			} else if (eventType == main.ModelObserver.EventTypes.UNEMPLOYEMENT_CHANGED) {
+				o.UnemployementChanged();
 			}
 		}
 	}
@@ -227,11 +231,33 @@ public class Model {
 	public synchronized void recomputeHappiness() {
 		//TODO: Provide implementation of this method
 		//TODO: Destruction should make sure that removing roads wont create unconnected road segments
+		//TODO: Make retail success depend on unemployement
+		//TODO: Make a piece that connects you to another world
 		/* Every person should add 0.01 to total happiness
 		 * But, if the dwelling is touching a factory, it should decrease total happiness by 10
 		 * If the dwelling is touching water or a park, then it should increase happiness by 0.05/person
 		 */
 		/* Notify observers */
 		notifyObservers(ModelObserver.EventTypes.HAPPINESS_CHANGED);
+	}
+	
+	/* 
+	 * Returns the current unemployment rate, formatted as a string
+	 * Unemployment = (TotalWorkers - TotalJobs)/(TotalWorkers) * 100
+	 */
+	public synchronized String getUnemploymentRate() {
+		int totalJobs = 0;
+		for (int y=0; y<this.board.length; y++) {
+			for (int x=0; x<this.board[0].length; x++) {
+				totalJobs += board[y][x].getNumEmployeePositions();
+			}
+		}
+		
+		if (totalJobs >= this.getPopulation()) {
+			return "0 %";
+		} else {
+			return (View.round(((double)(this.getPopulation() - totalJobs)/(double)(this.getPopulation()))*100,2) + "%");
+		}
+			
 	}
 }

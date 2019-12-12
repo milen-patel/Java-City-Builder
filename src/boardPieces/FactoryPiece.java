@@ -66,4 +66,9 @@ public class FactoryPiece extends AbstractBoardPiece implements BoardPieceInterf
 		/* Make it more expensive to construct the next one */
 		costToConstruct *= (1 + Math.random());		
 	}
+	
+	@Override
+	public int getNumEmployeePositions() {
+		return 10000;
+	}
 }

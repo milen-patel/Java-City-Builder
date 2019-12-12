@@ -58,5 +58,10 @@ public class WaterPiece extends AbstractBoardPiece implements boardPieces.BoardP
 	public void updateCost() {
 		return;	
 	}
+	
+	@Override
+	public int getNumEmployeePositions() {
+		return 0;
+	}
 
 }

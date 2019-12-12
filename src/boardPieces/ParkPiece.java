@@ -64,4 +64,9 @@ public class ParkPiece extends AbstractBoardPiece implements BoardPieceInterface
 		/* Make it more expensive to construct the next one */
 		costToConstruct *= (1 + Math.random());		
 	}
+	
+	@Override
+	public int getNumEmployeePositions() {
+		return 25;
+	}
 }

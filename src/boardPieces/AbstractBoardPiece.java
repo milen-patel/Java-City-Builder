@@ -49,4 +49,7 @@ public abstract class AbstractBoardPiece implements boardPieces.BoardPieceInterf
 	public abstract BufferedImage getSecondaryImage();
 	
 	public abstract BufferedImage getThirdImage();
+	
+	public abstract int getNumEmployeePositions();
+
 }
