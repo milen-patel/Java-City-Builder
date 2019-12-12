@@ -1,3 +1,4 @@
+
 # Welcome to City Builder
 
 The goal of this program was to create a city-building game using Java Swing and other programming concepts learned in UNC's COMP401 class. The game incorporates design patterns including Factory, Model-View, and Observer/Observable.
@@ -40,10 +41,11 @@ As you construct more instances of each building, the price will begin to increa
 
 
 
-There are restrictions as to where you can construct various buildings.
+There are restrictions as to where you can construct various buildings.  
 
-Apartments: must be constructed on a position that directly touches a road (not on a corner)
-Factory: must be constructed on a position that directly touches both a road and water
-House: must be constructed on a position that directly touches a road
-Retail: must be constructed on a position that directly touches a road
-Park: must be constructed on a position that directly touches water
+Apartments: must be constructed on a position that directly touches a road (not on a corner)  
+Factory: must be constructed on a position that directly touches both a road and water  
+House: must be constructed on a position that directly touches a road  
+Retail: must be constructed on a position that directly touches a road  
+Park: must be constructed on a position that directly touches water  
+Road: must be constructed on a position that directly touches another piece of road  
