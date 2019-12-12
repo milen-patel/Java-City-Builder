@@ -12,7 +12,7 @@ public class RetailPiece extends AbstractBoardPiece implements BoardPieceInterfa
 	
 	public RetailPiece(int xPos, int yPos) {
 		super(xPos, yPos, "Retail Piece");
-		this.income = Math.random()*100 + 10250.50;
+		this.income = Math.random()*100 + 10250.00;
 		
 		if (icon == null) {
 			try {

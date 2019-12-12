@@ -15,7 +15,7 @@ public class FactoryPiece extends AbstractBoardPiece implements BoardPieceInterf
 
 	public FactoryPiece(int xPos, int yPos) {
 		super(xPos, yPos, "Factory Piece");
-		this.dailyIncome = Math.random()*25000.0 + 35234.0;
+		this.dailyIncome = Math.random()*25000.0 + 35000.0;
 		
 		if (icon == null) {
 			try {
