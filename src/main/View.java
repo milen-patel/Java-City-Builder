@@ -15,7 +15,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import boardPieces.ApartmentPiece;
+import boardPieces.FactoryPiece;
 import boardPieces.HousePiece;
+import boardPieces.ParkPiece;
+import boardPieces.RetailPiece;
 import boardPieces.RoadPiece;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -184,6 +187,9 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 			EventLog.getEventLog().addEntry("|--> House: $" + View.round(HousePiece.costToConstruct, 2));
 			EventLog.getEventLog().addEntry("|--> Apartment: $" + View.round(ApartmentPiece.costToConstruct, 2));
 			EventLog.getEventLog().addEntry("|--> Road: $" + View.round(RoadPiece.costToConstruct, 2));
+			EventLog.getEventLog().addEntry("|--> Park: $" + View.round(ParkPiece.costToConstruct, 2));
+			EventLog.getEventLog().addEntry("|--> Factory: $" + View.round(FactoryPiece.costToConstruct, 2));
+			EventLog.getEventLog().addEntry("|--> Retail: $" + View.round(RetailPiece.costToConstruct, 2));
 			EventLog.getEventLog().addEntry("|--> Demolish: $" + View.round(Model.COST_TO_DEMOLISH, 2));
 			EventLog.getEventLog().addEntry("--------------------------------");
 		} else if (e.getActionCommand().contentEquals("PlayButton")) {
@@ -203,7 +209,7 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 
 	@Override
 	public void newLogEntry(String entry) {
-		logLabel.append(entry + "\n\n");
+		logLabel.append(entry + "\n");
 	}
 
 	@Override
