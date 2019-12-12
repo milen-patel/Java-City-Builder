@@ -29,13 +29,15 @@ City Builder allows you to construct various buildings which are unique for thei
 
 As you construct more instances of each building, the price will begin to increase. 
 
-|                |  Cost                        |Daily Income                     |
+|                |  Cost                         |Daily Income                 |
 |----------------|-------------------------------|-----------------------------|
-|Apartment		 | $10,000.00.                   |$0.00 - $1,000.00            |
+|Apartment		   | $10,000.00.                   |$0.00 - $1,000.00            |
 |Factory         | $100,000                      |$35,000.00 - $60,000.00      |
 |House           | $500.00                       |$0.00 - $100.00              |
 |Retail          | $50,000.00                    |$10,250.00 - $10,350.00      |
-|Park            |$500.00                        |$0.00 - $100.00              |
+|Park            | $500.00                       |$0.00 - $100.00              |
+|Road            | $500.00                       |$0.00                        |
+
 
 
 There are restrictions as to where you can construct various buildings.
