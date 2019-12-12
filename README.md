@@ -43,9 +43,20 @@ As you construct more instances of each building, the price will begin to increa
 
 There are restrictions as to where you can construct various buildings.  
 
-Apartments: must be constructed on a position that directly touches a road (not on a corner)  
-Factory: must be constructed on a position that directly touches both a road and water  
-House: must be constructed on a position that directly touches a road  
-Retail: must be constructed on a position that directly touches a road  
-Park: must be constructed on a position that directly touches water  
-Road: must be constructed on a position that directly touches another piece of road  
+**Apartments:** must be constructed on a position that directly touches a road (not on a corner)  
+**Factory:** must be constructed on a position that directly touches both a road and water  
+**House:** must be constructed on a position that directly touches a road  
+**Retail:** must be constructed on a position that directly touches a road  
+**Park:** must be constructed on a position that directly touches water  
+**Road:** must be constructed on a position that directly touches another piece of road  
+
+## Game Logic and Internal Mechanics
+Explain starting conditions, what pieces are placed where
+
+Explain how happinness is computed
+
+Explain how daily income is calculated and how it is affected by unemployment rate
+
+Explain how balance works and what can change it
+
+Explain what OOP principles are included in the game
