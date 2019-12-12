@@ -142,27 +142,22 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 
 	@Override
 	public void BalanceChanged() {
-		System.out.println("View Has Been Notified That Model's Balance Has Changed");
 		moneyLabel.setText("<html><b>Balance: $</b>" + round(model.getBalance(),2) + "</html>");
 	}
 
 	@Override
 	public void PopulationChanged() {
-		System.out.println("<html><b>Population: </b>" + model.getPopulation() + "</html>");
 		populationLabel.setText(("<html><b>Population: </b>" + model.getPopulation() + "</html>"));
 	}
 
 	@Override
 	public void DailyIncomeChanged() {
-		System.out.println("View Has Been Notified That Model's Daily Income Has Changed");
 		dailyIncomeLabel.setText("<html><b>Daily Income: $</b>" + round(model.getDailyIncome(),2) + "</html>");
 	}
 	
 	@Override
 	public void DayChanged() {
-		System.out.println("View Has Been Notified That Model's Day Has Changed");
 		dayLabel.setText("<html><b>Day: </b>" + model.getDay() + "</html>");
-
 	}
 	
 	@Override

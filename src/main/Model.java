@@ -51,6 +51,8 @@ public class Model {
 				board[y][x] = new WaterPiece(x,y);
 			}
 		}
+		/* Give the user one park piece for employement purposes */
+		board[BOARD_X/2-2][BOARD_Y/2-1] = new ParkPiece(BOARD_X/2-2, BOARD_Y/2-1);
 		
 	}
 
@@ -76,10 +78,11 @@ public class Model {
 	}
 	
 	public synchronized double getDailyIncome() {
+		double employmentMultiplier = this.getEmploymentMultiplier();
 		double runningTotal = 0.0;
 		for (int y=0; y<board.length; y++) {
 			for(int x=0; x<board[0].length; x++) {
-				runningTotal += board[y][x].getDailyIncome();
+				runningTotal += board[y][x].getDailyIncome()*employmentMultiplier;
 			}
 		}
 		return runningTotal;
@@ -171,7 +174,7 @@ public class Model {
 		recomputeHappiness();
 	}
 	
-	public synchronized boolean isPieceTouchingRoad(int x, int y) {
+	private synchronized boolean isPieceTouchingRoad(int x, int y) {
 		/* Test right above, if possible */
 		if (y != 0 && board[y-1][x] instanceof RoadPiece) { return true; }
 		/* Rest right below, if possible */
@@ -184,7 +187,7 @@ public class Model {
 		return false;
 	}
 	
-	public synchronized boolean isPieceTouchingWater(int x, int y) {
+	private synchronized boolean isPieceTouchingWater(int x, int y) {
 		/* Test right above, if possible */
 		if (y != 0 && board[y-1][x] instanceof WaterPiece) { return true; }
 		/* Rest right below, if possible */
@@ -193,6 +196,32 @@ public class Model {
 		if (x != BOARD_X-1 && board[y][x+1] instanceof WaterPiece) { return true; }
 		/* Test left spot, if possible */
 		if (x != 0 && board[y][x-1] instanceof WaterPiece) { return true; }
+		/* If none of the cases work, then no */
+		return false;
+	}
+	
+	private synchronized boolean isPieceTouchingFactory(int x, int y) {
+		/* Test right above, if possible */
+		if (y != 0 && board[y-1][x] instanceof FactoryPiece) { return true; }
+		/* Rest right below, if possible */
+		if (y != BOARD_Y-1 && board[y+1][x] instanceof FactoryPiece) { return true; }
+		/* Test right spot, if possible */
+		if (x != BOARD_X-1 && board[y][x+1] instanceof FactoryPiece) { return true; }
+		/* Test left spot, if possible */
+		if (x != 0 && board[y][x-1] instanceof FactoryPiece) { return true; }
+		/* If none of the cases work, then no */
+		return false;
+	}
+	
+	private synchronized boolean isPieceTouchingPark(int x, int y) {
+		/* Test right above, if possible */
+		if (y != 0 && board[y-1][x] instanceof ParkPiece) { return true; }
+		/* Rest right below, if possible */
+		if (y != BOARD_Y-1 && board[y+1][x] instanceof ParkPiece) { return true; }
+		/* Test right spot, if possible */
+		if (x != BOARD_X-1 && board[y][x+1] instanceof ParkPiece) { return true; }
+		/* Test left spot, if possible */
+		if (x != 0 && board[y][x-1] instanceof ParkPiece) { return true; }
 		/* If none of the cases work, then no */
 		return false;
 	}
@@ -229,14 +258,22 @@ public class Model {
 		return happiness;
 	}
 	public synchronized void recomputeHappiness() {
-		//TODO: Provide implementation of this method
-		//TODO: Destruction should make sure that removing roads wont create unconnected road segments
-		//TODO: Make retail success depend on unemployement
-		//TODO: Make a piece that connects you to another world
 		/* Every person should add 0.01 to total happiness
 		 * But, if the dwelling is touching a factory, it should decrease total happiness by 10
 		 * If the dwelling is touching water or a park, then it should increase happiness by 0.05/person
 		 */
+		this.happiness = 0.0;
+		for (int y=0; y<this.board.length; y++) {
+			for (int x=0; x<this.board[0].length; x++) {
+				if (this.isPieceTouchingFactory(x, y) && board[y][x].getNumResidents() != 0) {
+					this.happiness -= 10;
+				} else if (this.isPieceTouchingPark(x, y) || this.isPieceTouchingWater(x, y)) {
+					this.happiness += board[y][x].getNumResidents()*0.05;
+				} else {
+					this.happiness += board[y][x].getNumResidents()*0.01;
+				}
+			}
+		}
 		/* Notify observers */
 		notifyObservers(ModelObserver.EventTypes.HAPPINESS_CHANGED);
 	}
@@ -257,6 +294,27 @@ public class Model {
 			return "0 %";
 		} else {
 			return (View.round(((double)(this.getPopulation() - totalJobs)/(double)(this.getPopulation()))*100,2) + "%");
+		}
+			
+	}
+	
+	/* 
+	 * Used for computing daily income
+	 * Returns the amount of the population that is employed on the range (0,1)
+	 * 	0 indicates no employment at all
+	 *  1 indicates that every citizen is employed
+	 */
+	private synchronized double getEmploymentMultiplier() {
+		int totalJobs = 0;
+		for (int y=0; y<this.board.length; y++) {
+			for (int x=0; x<this.board[0].length; x++) {
+				totalJobs += board[y][x].getNumEmployeePositions();
+			}
+		}
+		if (totalJobs >= this.getPopulation()) {
+			return 1.0000;
+		} else {
+			return 1.0 - (double)(this.getPopulation() - totalJobs) / (double)(this.getPopulation());
 		}
 			
 	}
