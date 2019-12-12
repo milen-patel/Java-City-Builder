@@ -21,9 +21,8 @@ import boardPieces.HousePiece;
 import boardPieces.ParkPiece;
 import boardPieces.RetailPiece;
 import boardPieces.RoadPiece;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
+
 public class View extends JPanel implements main.ModelObserver, ActionListener, LogObserver{
 	/* Define instance variables */
 	private JLabel moneyLabel;
