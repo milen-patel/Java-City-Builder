@@ -20,7 +20,7 @@ The fourth label represents your overall happiness, on a scale of negative infin
 
 The next day button will skip your simulation to the next day and the play/pause button will automatically update the day with 100 millisecond pauses between each day.
 
-Below the sequence of labels and buttons is a log of all the events that have happened in your simulation including the construction of new buildings and the passing of new days. Clicking the 'help' button will show the current prices to construct each building in your log. The log is never cleared and can be viewed entirely from the start of the game.
+Below the sequence of labels and buttons is a log of all the events that have happened in your simulation including the construction of new buildings and the passing of new days. Clicking the 'prices' button will show the current prices to construct each building in your log. The log is never cleared and can be viewed entirely from the start of the game.
 
 The game is free to be played endlessly and has no winning or losing condition.
 
