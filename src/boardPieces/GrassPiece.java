@@ -5,12 +5,12 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class GrassPiece extends AbstractBoardPiece implements BoardPieceInterface{
+public class GrassPiece extends AbstractBoardPiece implements BoardPieceInterface {
 	private static BufferedImage icon;
-	
+
 	public GrassPiece(int xPos, int yPos) {
 		super(xPos, yPos, "Grass Piece");
-		
+
 		if (icon == null) {
 			try {
 				icon = ImageIO.read(getClass().getResource("/boardPieces/GrassImage.jpg"));
@@ -27,12 +27,13 @@ public class GrassPiece extends AbstractBoardPiece implements BoardPieceInterfac
 		/* Empty pieces shouldn't generate revenue */
 		return 0.0;
 	}
-	
+
 	@Override
 	public int getNumResidents() {
 		/* No one can live on empty pieces */
 		return 0;
 	}
+
 	@Override
 	public double getCostToBuild() {
 		return 0;
@@ -42,24 +43,12 @@ public class GrassPiece extends AbstractBoardPiece implements BoardPieceInterfac
 	public BufferedImage getPieceImage() {
 		return icon;
 	}
-	
 
-	@Override
-	public BufferedImage getSecondaryImage() {
-		return getPieceImage();
-	}
-
-
-	@Override
-	public BufferedImage getThirdImage() {
-		return getPieceImage();
-	}
-	
 	@Override
 	public void updateCost() {
-		return;	
+		return;
 	}
-	
+
 	@Override
 	public int getNumEmployeePositions() {
 		return 0;

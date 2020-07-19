@@ -6,13 +6,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class RoadPiece extends AbstractBoardPiece implements BoardPieceInterface {
-	public enum roadType { HORIZONTAL, VERTICAL, INTERSECTION, ENDPIECE, TLCORNER, TRCORNER, BRCORNER, BLCORNER}
+
 	private BufferedImage icon;
 	public static double costToConstruct = 500.0;
-	
+
 	public RoadPiece(int xPos, int yPos) {
 		super(xPos, yPos, "Road Piece");
-		
+
 		if (icon == null) {
 			try {
 				icon = ImageIO.read(getClass().getResource("/boardPieces/RoadImage.jpg"));
@@ -22,22 +22,21 @@ public class RoadPiece extends AbstractBoardPiece implements BoardPieceInterface
 				e.printStackTrace();
 			}
 		}
-		
-		
+
 	}
-	
+
 	@Override
 	public double getDailyIncome() {
 		/* Empty pieces shouldn't generate revenue */
 		return 0.0;
 	}
-	
+
 	@Override
 	public int getNumResidents() {
 		/* No one can live on empty pieces */
 		return 0;
 	}
-	
+
 	@Override
 	public double getCostToBuild() {
 		return costToConstruct;
@@ -49,22 +48,11 @@ public class RoadPiece extends AbstractBoardPiece implements BoardPieceInterface
 	}
 
 	@Override
-	public BufferedImage getSecondaryImage() {
-		return getPieceImage();
-	}
-
-
-	@Override
-	public BufferedImage getThirdImage() {
-		return getPieceImage();
-	}
-	
-	@Override
 	public void updateCost() {
 		/* Make it more expensive to construct the next one */
-		costToConstruct *= (1 + Math.random()/15);		
+		costToConstruct *= (1 + Math.random() / 15);
 	}
-	
+
 	@Override
 	public int getNumEmployeePositions() {
 		return 0;

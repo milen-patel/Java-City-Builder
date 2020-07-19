@@ -15,8 +15,8 @@ public class FactoryPiece extends AbstractBoardPiece implements BoardPieceInterf
 
 	public FactoryPiece(int xPos, int yPos) {
 		super(xPos, yPos, "Factory Piece");
-		this.dailyIncome = Math.random()*25000.0 + 35000.0;
-		
+		this.dailyIncome = Math.random() * 25000.0 + 35000.0;
+
 		if (icon == null) {
 			try {
 				icon = ImageIO.read(getClass().getResource("/boardPieces/FactoryImage.png"));
@@ -51,22 +51,11 @@ public class FactoryPiece extends AbstractBoardPiece implements BoardPieceInterf
 	}
 
 	@Override
-	public BufferedImage getSecondaryImage() {
-		return icon2;
-	}
-
-
-	@Override
-	public BufferedImage getThirdImage() {
-		return icon3;
-	}
-	
-	@Override
 	public void updateCost() {
 		/* Make it more expensive to construct the next one */
-		costToConstruct *= (1 + Math.random());		
+		costToConstruct *= (1 + Math.random());
 	}
-	
+
 	@Override
 	public int getNumEmployeePositions() {
 		return 10000;

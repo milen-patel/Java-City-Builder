@@ -41,26 +41,23 @@ public interface BoardPieceInterface {
 	 * Returns an image representation of the building for the BoardVisualizerWidget
 	 * to use
 	 * 
-	 * A current feature is the ability to provide basic animation for each icon
-	 * The BoardVisualizerWidget will alternate between these three methods as the day changes
-	 * If all three methods return different images, the icon will appear animated
+	 * A current feature is the ability to provide basic animation for each icon The
+	 * BoardVisualizerWidget will alternate between these three methods as the day
+	 * changes If all three methods return different images, the icon will appear
+	 * animated
 	 * 
 	 */
 	public BufferedImage getPieceImage();
-
-	public BufferedImage getSecondaryImage();
-
-	public BufferedImage getThirdImage();
 
 	/*
 	 * As successive units of a piece are constructed, we want the price of
 	 * construction to increase
 	 */
 	public void updateCost();
-	
+
 	/*
-	 * Some board pieces have the opportunity to employ people
-	 * This method returns the number of people that the implementation can employ
+	 * Some board pieces have the opportunity to employ people This method returns
+	 * the number of people that the implementation can employ
 	 */
 	public int getNumEmployeePositions();
 

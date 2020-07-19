@@ -8,7 +8,8 @@ public interface ModelObserver {
 	 * knows when to update various UI elements
 	 */
 	enum EventTypes {
-		BALANCE_CHANGED, POPULATION_CHANGED, DAILYINCOME_CHANGED, DAY_CHANGED, BOARD_CHANGED, HAPPINESS_CHANGED, UNEMPLOYEMENT_CHANGED
+		BALANCE_CHANGED, POPULATION_CHANGED, DAILYINCOME_CHANGED, DAY_CHANGED, BOARD_CHANGED, HAPPINESS_CHANGED,
+		UNEMPLOYEMENT_CHANGED
 	};
 
 	/*
@@ -40,12 +41,12 @@ public interface ModelObserver {
 	 * because of construction or demolition
 	 */
 	public void BoardChanged();
-	
+
 	/*
 	 * Tells observer that the overall happiness of the game has changed
 	 */
 	public void HappinessChanged();
-	
+
 	/*
 	 * Tells the observer that the unemployment rate has changed
 	 */

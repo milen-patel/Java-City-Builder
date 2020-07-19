@@ -23,20 +23,20 @@ import boardPieces.RetailPiece;
 import boardPieces.RoadPiece;
 import java.text.NumberFormat;
 
-public class View extends JPanel implements main.ModelObserver, ActionListener, LogObserver{
+public class View extends JPanel implements main.ModelObserver, ActionListener, LogObserver {
 	/* Define instance variables */
 	private JLabel moneyLabel;
 	private JLabel dailyIncomeLabel;
 	private JLabel populationLabel;
-	private JLabel dayLabel; 
+	private JLabel dayLabel;
 	private JLabel happinessLabel;
 	private JLabel unemploymentLabel;
 	private JTextArea logLabel;
-	
+
 	private JButton nextDayButton;
 	private JButton helpButton;
 	private JButton playButton;
-	
+
 	private Model model;
 	private GridBagConstraints c;
 	private BoardVisualizerWidget boardDrawer;
@@ -50,61 +50,60 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 		/* Encapsulate the model */
 		this.model = model;
 		this.setBackground(Color.LIGHT_GRAY);
-		
+
 		/* Set the Layout */
 		this.setLayout(new GridBagLayout());
-	    c = new GridBagConstraints();
+		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		this.setPreferredSize(new Dimension(1000, 1000));
-		
-		
+
 		/* Add board visualizer widget */
 		boardDrawer = new BoardVisualizerWidget(model);
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridheight = 10;
 		this.add(boardDrawer, c);
-		
-	    c.gridx = 1;
-	    this.add(new JLabel("   "), c);
+
+		c.gridx = 1;
+		this.add(new JLabel("   "), c);
 
 		/* Add Money Label */
-		moneyLabel = new JLabel("<html><b>Balance: $</b>" + round(model.getBalance(),2) + "</html>");
+		moneyLabel = new JLabel("<html><b>Balance: $</b>" + round(model.getBalance(), 2) + "</html>");
 		c.gridx = 2;
 		c.gridy = 0;
 		c.gridheight = 1;
 		this.add(moneyLabel, c);
-		
+
 		/* Add daily income label */
-		dailyIncomeLabel = new JLabel("<html><b>Daily Income: $</b>" + round(model.getDailyIncome(),2) + "</html>");
+		dailyIncomeLabel = new JLabel("<html><b>Daily Income: $</b>" + round(model.getDailyIncome(), 2) + "</html>");
 		c.gridx = 2;
 		c.gridy = 1;
 		this.add(dailyIncomeLabel, c);
-		
+
 		/* Add population label */
 		populationLabel = new JLabel("<html><b>Population: </b>" + model.getPopulation() + "</html>");
 		c.gridx = 2;
 		c.gridy = 2;
 		this.add(populationLabel, c);
-		
+
 		/* Add Day Label */
 		dayLabel = new JLabel("<html><b>Day: </b>" + model.getDay() + "</html>");
 		c.gridx = 2;
 		c.gridy = 3;
 		this.add(dayLabel, c);
-		
+
 		/* Add happiness label */
 		happinessLabel = new JLabel("<html><b>Happiness: </b>" + model.getHappiness() + "</html>");
 		c.gridx = 2;
 		c.gridy = 4;
 		this.add(happinessLabel, c);
-		
+
 		/* Add unemployment label */
 		unemploymentLabel = new JLabel("<html><b>Unemployement Rate: </b>" + model.getUnemploymentRate() + "</html>");
 		c.gridx = 2;
 		c.gridy = 5;
 		this.add(unemploymentLabel, c);
-		
+
 		/* Add Next Day Button */
 		nextDayButton = new JButton("Next Day");
 		nextDayButton.setActionCommand("NextDayButton");
@@ -112,15 +111,15 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 		c.gridx = 2;
 		c.gridy = 6;
 		this.add(nextDayButton, c);
-		
+
 		/* Add help button */
-		helpButton = new JButton("Help");
+		helpButton = new JButton("Prices");
 		helpButton.setActionCommand("HelpButton");
 		helpButton.addActionListener(this);
 		c.gridx = 2;
 		c.gridy = 7;
 		this.add(helpButton, c);
-		
+
 		/* Add play button */
 		playButton = new JButton("Play/Pause");
 		playButton.setActionCommand("PlayButton");
@@ -128,24 +127,24 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 		c.gridx = 2;
 		c.gridy = 8;
 		this.add(playButton, c);
-		
+
 		/* Set up log visualizer */
-		logLabel = new JTextArea(45,22);
+		logLabel = new JTextArea(45, 22);
 		logLabel.setEditable(false);
 		c.gridx = 2;
 		c.gridy = 9;
 		this.add(new JScrollPane(logLabel), c);
-		
+
 		/* Add the View as a ModelObserver */
 		model.addObserver(this);
 		/* Add the View as a log Observer */
 		EventLog.getEventLog().addObserver(this);
-	
+
 	}
 
 	@Override
 	public void BalanceChanged() {
-		moneyLabel.setText("<html><b>Balance: $</b>" + round(model.getBalance(),2) + "</html>");
+		moneyLabel.setText("<html><b>Balance: $</b>" + round(model.getBalance(), 2) + "</html>");
 	}
 
 	@Override
@@ -155,28 +154,26 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 
 	@Override
 	public void DailyIncomeChanged() {
-		dailyIncomeLabel.setText("<html><b>Daily Income: $</b>" + round(model.getDailyIncome(),2) + "</html>");
+		dailyIncomeLabel.setText("<html><b>Daily Income: $</b>" + round(model.getDailyIncome(), 2) + "</html>");
 	}
-	
+
 	@Override
 	public void DayChanged() {
 		dayLabel.setText("<html><b>Day: </b>" + model.getDay() + "</html>");
 	}
-	
+
 	@Override
 	public void HappinessChanged() {
-		happinessLabel.setText("<html><b>Happiness: </b>" + round(model.getHappiness(),2) + "</html>");
+		happinessLabel.setText("<html><b>Happiness: </b>" + round(model.getHappiness(), 2) + "</html>");
 	}
-	
+
 	@Override
 	public void UnemployementChanged() {
-		unemploymentLabel.setText("<html><b>Unemployement: </b>" + model.getUnemploymentRate() + "</html>");		
+		unemploymentLabel.setText("<html><b>Unemployement: </b>" + model.getUnemploymentRate() + "</html>");
 	}
 
-
-
 	@Override
-	//TODO: Make the help button more useful
+	// TODO: Make the help button more useful
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().contentEquals("NextDayButton")) {
 			model.nextDay();
@@ -204,8 +201,6 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 			}
 		}
 	}
-	
-	
 
 	@Override
 	public void newLogEntry(String entry) {
@@ -217,21 +212,20 @@ public class View extends JPanel implements main.ModelObserver, ActionListener, 
 		boardDrawer.repaint();
 	}
 
-	/* Internal helper method used for rounding doubles when displaying UI elements */
-	//TODO: Make this return a string an add commas
+	/*
+	 * Internal helper method used for rounding doubles when displaying UI elements
+	 */
+	// TODO: Make this return a string an add commas
 	public static String round(double value, int places) {
-	    if (places < 0) throw new IllegalArgumentException();
+		if (places < 0)
+			throw new IllegalArgumentException();
 
-	    BigDecimal bd = BigDecimal.valueOf(value);
-	    bd = bd.setScale(places, RoundingMode.HALF_UP);
-	    myFormat.setGroupingUsed(true); // this will also round numbers, 3
-	    // decimal places
-	    return myFormat.format(bd.doubleValue());
-
+		BigDecimal bd = BigDecimal.valueOf(value);
+		bd = bd.setScale(places, RoundingMode.HALF_UP);
+		myFormat.setGroupingUsed(true); // this will also round numbers, 3
+		// decimal places
+		return myFormat.format(bd.doubleValue());
 
 	}
-
-
-	
 
 }

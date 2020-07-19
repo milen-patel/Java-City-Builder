@@ -74,17 +74,8 @@ public class BoardVisualizerWidget extends JPanel implements MouseListener {
 				g2d.drawRect((int) (x * eachCellXWidth), (int) (y * eachCellYWidth), (int) (eachCellXWidth),
 						(int) (eachCellYWidth));
 				/* Visualize the piece inside of the cell */
-				if (model.getDay() % 3 == 0) {
-					g2d.drawImage(model.getBoard()[y][x].getPieceImage(), (int) (x * eachCellXWidth),
-							(int) (y * eachCellYWidth), (int) (eachCellXWidth), (int) (eachCellYWidth), null);
-				} else if (model.getDay() % 3 == 1) {
-					g2d.drawImage(model.getBoard()[y][x].getSecondaryImage(), (int) (x * eachCellXWidth),
-							(int) (y * eachCellYWidth), (int) (eachCellXWidth), (int) (eachCellYWidth), null);
-				} else if (model.getDay() % 3 == 2) {
-					g2d.drawImage(model.getBoard()[y][x].getThirdImage(), (int) (x * eachCellXWidth),
-							(int) (y * eachCellYWidth), (int) (eachCellXWidth), (int) (eachCellYWidth), null);
-				}
-
+				g2d.drawImage(model.getBoard()[y][x].getPieceImage(), (int) (x * eachCellXWidth),
+						(int) (y * eachCellYWidth), (int) (eachCellXWidth), (int) (eachCellYWidth), null);
 			}
 		}
 

@@ -1,7 +1,7 @@
 package main;
 
 public class BackgroundRunner extends Thread {
-	
+
 	/* Instance Variables */
 	private boolean isDone;
 	private Model model;
@@ -25,7 +25,7 @@ public class BackgroundRunner extends Thread {
 	public void terminate() {
 		isDone = true;
 	}
-	
+
 	public double getPauseDuration() {
 		return this.pauseDuration;
 	}

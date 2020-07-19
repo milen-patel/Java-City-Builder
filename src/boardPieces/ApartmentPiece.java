@@ -5,18 +5,17 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class ApartmentPiece extends AbstractBoardPiece implements BoardPieceInterface{
+public class ApartmentPiece extends AbstractBoardPiece implements BoardPieceInterface {
 	private double income;
 	private int residents;
-	private static BufferedImage icon; 
+	private static BufferedImage icon;
 	public static double costToConstruct = 10000;
-	
-	
+
 	public ApartmentPiece(int xPos, int yPos) {
 		super(xPos, yPos, "Apartment Piece");
-		this.income = Math.random()*1000;
-		this.residents = (int) (1+ (400*Math.random()));
-		
+		this.income = Math.random() * 1000;
+		this.residents = (int) (1 + (400 * Math.random()));
+
 		if (icon == null) {
 			try {
 				icon = ImageIO.read(getClass().getResource("/boardPieces/ApartmentImage.png"));
@@ -26,9 +25,8 @@ public class ApartmentPiece extends AbstractBoardPiece implements BoardPieceInte
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
-	
 
 	@Override
 	public double getDailyIncome() {
@@ -53,19 +51,7 @@ public class ApartmentPiece extends AbstractBoardPiece implements BoardPieceInte
 	@Override
 	public void updateCost() {
 		/* Make it more expensive to construct the next one */
-		costToConstruct *= (1 + Math.random());		
-	}
-
-
-	@Override
-	public BufferedImage getSecondaryImage() {
-		return getPieceImage();
-	}
-
-
-	@Override
-	public BufferedImage getThirdImage() {
-		return getPieceImage();
+		costToConstruct *= (1 + Math.random());
 	}
 
 	@Override
