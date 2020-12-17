@@ -50,13 +50,3 @@ There are restrictions as to where you can construct various buildings.
 **Park:** must be constructed on a position that directly touches water  
 **Road:** must be constructed on a position that directly touches another piece of road  
 
-## Game Logic and Internal Mechanics
-Explain starting conditions, what pieces are placed where
-
-Explain how happinness is computed
-
-Explain how daily income is calculated and how it is affected by unemployment rate
-
-Explain how balance works and what can change it
-
-Explain what OOP principles are included in the game
