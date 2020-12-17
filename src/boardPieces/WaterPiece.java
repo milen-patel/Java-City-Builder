@@ -10,8 +10,7 @@ public class WaterPiece extends AbstractBoardPiece implements boardPieces.BoardP
 
 	public WaterPiece(int xPos, int yPos) {
 		super(xPos, yPos, "Water Piece");
-		
-		
+
 		if (icon == null) {
 			try {
 				icon = ImageIO.read(getClass().getResource("/boardPieces/WaterImage.jpeg"));
@@ -44,21 +43,10 @@ public class WaterPiece extends AbstractBoardPiece implements boardPieces.BoardP
 	}
 
 	@Override
-	public BufferedImage getSecondaryImage() {
-		return getPieceImage();
-	}
-
-
-	@Override
-	public BufferedImage getThirdImage() {
-		return getPieceImage();
-	}
-
-	@Override
 	public void updateCost() {
-		return;	
+		return;
 	}
-	
+
 	@Override
 	public int getNumEmployeePositions() {
 		return 0;
